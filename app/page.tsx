@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const stages = [
   { name: "Intake Received", status: "complete", snippet: "Application and intake details logged." },
@@ -66,9 +66,29 @@ export default function Home() {
   const [isStageMenuOpen, setIsStageMenuOpen] = useState(false);
   const [isRequirementsModalOpen, setIsRequirementsModalOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const stageRefs = useRef<Array<HTMLDivElement | null>>([]);
   const activeStageIndex = stages.findIndex((stage) => stage.status === "active");
   const activeStage = stages[activeStageIndex] ?? stages[0];
   const progressPercent = ((activeStageIndex + 1) / stages.length) * 100;
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    const activeStep = stageRefs.current[activeStageIndex];
+
+    if (!container || !activeStep) {
+      return;
+    }
+
+    const activeCenter = activeStep.offsetLeft + activeStep.offsetWidth / 2;
+    const containerCenter = container.clientWidth / 2;
+    const newScrollLeft = Math.max(0, activeCenter - containerCenter);
+
+    container.scrollTo({
+      left: newScrollLeft,
+      behavior: "auto",
+    });
+  }, [activeStageIndex]);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-100 text-slate-900">
@@ -148,25 +168,40 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <button
-                    type="button"
+                  <div
+                    role="button"
+                    tabIndex={0}
                     onClick={() => setIsStageMenuOpen((value) => !value)}
-                    className="block w-full text-left"
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        setIsStageMenuOpen((value) => !value);
+                      }
+                    }}
+                    className="block w-full overflow-x-auto overflow-y-hidden text-left outline-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    ref={scrollContainerRef}
+                    style={{ overscrollBehaviorY: "contain" }}
                   >
-                    <div className="relative mb-3 px-1">
+                    <div className="relative mb-3 min-w-[680px] px-1 sm:min-w-0" style={{ scrollBehavior: "auto" }}>
                       <div className="absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-[10px] bg-slate-200" />
                       <div
                         className="absolute left-0 top-1/2 h-1 -translate-y-1/2 rounded-full"
                         style={{ width: `${progressPercent}%`, backgroundColor: "#152c58" }}
                       />
 
-                      <div className="relative flex min-w-0 items-center justify-between gap-1 sm:gap-0">
+                      <div className="relative flex min-w-[680px] items-center justify-between gap-1 sm:min-w-0 sm:gap-0">
                         {stages.map((stage, index) => {
                           const isComplete = index < activeStageIndex;
                           const isActive = index === activeStageIndex;
 
                           return (
-                            <div key={stage.name} className="group relative flex min-w-0 flex-1 justify-center">
+                            <div
+                              key={stage.name}
+                              ref={(node) => {
+                                stageRefs.current[index] = node;
+                              }}
+                              className="group relative flex min-w-0 flex-1 justify-center"
+                            >
                               <div
                                 className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full border-4 border-white text-[10px] font-bold shadow-sm sm:h-8 sm:w-8 sm:text-xs ${
                                   isComplete
@@ -197,7 +232,7 @@ export default function Home() {
                         })}
                       </div>
                     </div>
-                  </button>
+                  </div>
 
                   {isStageMenuOpen && (
                     <div className="mt-2 rounded-[5px] p-3">
