@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Strategic Services | EIDLexit",
   description: "Client case dashboard for EIDLexit strategic services progression and document tracking.",
+  icons: {
+    icon: "/EIDLexit/eidlexit_icon.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

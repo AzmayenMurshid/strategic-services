@@ -3,18 +3,18 @@
 import { useState } from "react";
 
 const stages = [
-  { name: "Intake Received", status: "complete" },
-  { name: "Initial Review", status: "complete" },
-  { name: "Client Information Collected", status: "complete" },
-  { name: "Financial Overview Requested", status: "complete" },
-  { name: "Financial Overview Submitted", status: "complete" },
-  { name: "Documents Under Review", status: "complete" },
-  { name: "Consultant Review", status: "active" },
-  { name: "Case Packet Drafting", status: "upcoming" },
-  { name: "Client Follow-Up Requested", status: "upcoming" },
-  { name: "Additional Information Needed", status: "upcoming" },
-  { name: "Case Ready for Submission", status: "upcoming" },
-  { name: "Completed / Closed", status: "upcoming" },
+  { name: "Intake Received", status: "complete", snippet: "Application and intake details logged." },
+  { name: "Initial Review", status: "complete", snippet: "Case reviewed for completeness." },
+  { name: "Client Information Collected", status: "complete", snippet: "Business and owner info gathered." },
+  { name: "Financial Overview Requested", status: "complete", snippet: "Financial packet requested from client." },
+  { name: "Financial Overview Submitted", status: "complete", snippet: "Client financial summary received." },
+  { name: "Documents Under Review", status: "complete", snippet: "Supporting documents are in review." },
+  { name: "Consultant Review", status: "active", snippet: "Consultant is validating the file." },
+  { name: "Case Packet Drafting", status: "upcoming", snippet: "Drafting the case packet for review." },
+  { name: "Client Follow-Up Requested", status: "upcoming", snippet: "Client follow-up items are pending." },
+  { name: "Additional Information Needed", status: "upcoming", snippet: "Additional data requested from client." },
+  { name: "Case Ready for Submission", status: "upcoming", snippet: "File is prepared for submission." },
+  { name: "Completed / Closed", status: "upcoming", snippet: "Case closed out after submission." },
 ];
 
 const requiredDocs = [
@@ -27,13 +27,13 @@ const requiredDocs = [
 ];
 
 const documentRequirements = [
-  { label: "Financial overview packet", type: "Required", note: "Covers the business financial summary and supporting detail." },
+  { label: "Financial overview packet", type: "Received", note: "Covers the business financial summary and supporting detail." },
   { label: "Business tax returns", type: "Required", note: "Most recent filed returns for the business entity." },
-  { label: "Bank statements", type: "Required", note: "Recent statements to confirm cash flow and account activity." },
+  { label: "Bank statements", type: "Received", note: "Recent statements to confirm cash flow and account activity." },
   { label: "Owner payroll records", type: "Required", note: "Owner compensation and payroll verification for the business." },
   { label: "Legal entity documents", type: "Recommended", note: "Articles, formation records, EIN verification, or ownership structure documents." },
   { label: "Consultant follow-up items", type: "Recommended", note: "Any additional verification requested by the case consultant." },
-  { label: "Owner identification documents", type: "Recommended", note: "Government-issued ID or ownership verification if requested." },
+  { label: "Owner identification documents", type: "Received", note: "Government-issued ID or ownership verification if requested." },
   { label: "Debt schedule or loan detail", type: "Recommended", note: "Helpful for reviewing financing obligations and staging details." },
 ];
 
@@ -71,29 +71,31 @@ export default function Home() {
   const progressPercent = ((activeStageIndex + 1) / stages.length) * 100;
 
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-900">
-      <header className="w-full border-b border-slate-200 bg-white px-6 py-5 shadow-sm">
+    <div className="min-h-screen overflow-x-hidden bg-slate-100 text-slate-900">
+      <header className="w-full border-b border-slate-200 bg-white px-4 py-5 shadow-sm sm:px-6">
         <div className="mx-auto max-w-[1600px]">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div>
+            <div className="min-w-0">
               <p className="text-sm font-medium uppercase tracking-[0.2em] text-blue-600">
                 Strategic Services
               </p>
-              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">
-                EIDLexit
-              </h1>
+              <img
+                src="https://eidlexit.com/hubfs/Branding%20Marketing%20Files/Logo-signature-120px.png"
+                alt="EIDLexit logo"
+                className="mt-2 h-10 w-auto max-w-full object-contain sm:h-12"
+              />
             </div>
 
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <div className="relative">
                 <button
                   type="button"
                   aria-label="Open client profile"
                   onClick={() => setIsProfileMenuOpen((value) => !value)}
-                  className="flex items-center gap-2 rounded-[5px] bg-white px-3 py-2 text-left shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                  className="flex max-w-full items-center gap-2 rounded-[5px] bg-white px-3 py-2 text-left shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
                 >
-                  <span className="text-lg font-semibold text-slate-900">Jordan Martinez</span>
-                  <span className="text-xs font-medium uppercase tracking-[0.12em] text-slate-500">
+                  <span className="truncate text-base font-semibold text-slate-900 sm:text-lg">Jordan Martinez</span>
+                  <span className="shrink-0 text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500 sm:text-xs">
                     {isProfileMenuOpen ? "" : "Profile"}
                   </span>
                 </button>
@@ -117,9 +119,9 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-8">
-        <main className="grid gap-6 xl:grid-cols-[1.5fr_0.8fr]">
-          <section className="space-y-6">
+      <div className="mx-auto max-w-full px-4 py-8 sm:px-6 lg:px-8">
+        <main className="grid min-w-0 gap-6 xl:grid-cols-[1.5fr_0.8fr]">
+          <section className="min-w-0 space-y-6">
             <div className="rounded-[5px] border-slate-200 px-6 py-2">
               <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               </div>
@@ -158,15 +160,15 @@ export default function Home() {
                         style={{ width: `${progressPercent}%`, backgroundColor: "#152c58" }}
                       />
 
-                      <div className="relative flex items-center justify-between">
+                      <div className="relative flex min-w-0 items-center justify-between gap-1 sm:gap-0">
                         {stages.map((stage, index) => {
                           const isComplete = index < activeStageIndex;
                           const isActive = index === activeStageIndex;
 
                           return (
-                            <div key={stage.name} className="flex flex-1 justify-center">
+                            <div key={stage.name} className="group relative flex min-w-0 flex-1 justify-center">
                               <div
-                                className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-4 border-white text-xs font-bold shadow-sm ${
+                                className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full border-4 border-white text-[10px] font-bold shadow-sm sm:h-8 sm:w-8 sm:text-xs ${
                                   isComplete
                                     ? "text-white"
                                     : isActive
@@ -182,6 +184,13 @@ export default function Home() {
                                 }
                               >
                                 {isComplete ? "✓" : index + 1}
+                              </div>
+
+                              <div className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 w-44 -translate-x-1/2 rounded-[5px] border border-slate-200 bg-slate-900 p-2 text-left opacity-0 shadow-lg transition-all duration-150 group-hover:opacity-100">
+                                <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-300">
+                                  {stage.name}
+                                </p>
+                                <p className="mt-1 text-[10px] leading-4 text-slate-100">{stage.snippet}</p>
                               </div>
                             </div>
                           );
@@ -223,7 +232,7 @@ export default function Home() {
                 <div>
                   <div className="mb-5 flex items-center justify-between">
                     <div>
-                      <p className="mt-2 text-xl font-semibold">Needed from Client</p>
+                      <p className="mt-2 text-lg font-semibold sm:text-xl">Needed from Client</p>
                     </div>
                     <button
                       type="button"
@@ -258,9 +267,9 @@ export default function Home() {
                         {index !== recentUpdates.length - 1 && (
                           <div className="absolute left-[7px] top-0 h-full w-px bg-slate-200" />
                         )}
-                        <div className="absolute left-0 h-4 w-4 rounded-full bg-blue-600 shadow-sm" />
+                        <div className="absolute left-0 h-4 w-4 rounded-full bg-[#08244a] shadow-sm" />
                         <div className="pb-5">
-                          <div className="flex items-center justify-between gap-3">
+                          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
                             <p className="text-sm text-slate-700">{update.text}</p>
                             <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
                               {update.age}
@@ -275,7 +284,7 @@ export default function Home() {
             </div>
           </section>
 
-          <aside className="space-y-6">
+          <aside className="min-w-0 space-y-6">
             <div className="rounded-[5px] p-6">
               <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
                 Upload Packet
@@ -376,7 +385,9 @@ export default function Home() {
                       className={`shrink-0 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${
                         doc.type === "Required"
                           ? "text-[#da0101]"
-                          : "text-[#007b5b]"
+                          : doc.type === "Received"
+                            ? "text-[#007b5b]"
+                            : "text-[#1d4ed8]"
                       }`}
                     >
                       {doc.type}
