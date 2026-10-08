@@ -63,13 +63,15 @@ const docStyles: Record<string, string> = {
 };
 
 export default function Home() {
-  const [isStageMenuOpen, setIsStageMenuOpen] = useState(false);
   const [isRequirementsModalOpen, setIsRequirementsModalOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [selectedStageIndex, setSelectedStageIndex] = useState<number | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const stageRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const stageRefs = useRef<Array<HTMLElement | null>>([]);
   const activeStageIndex = stages.findIndex((stage) => stage.status === "active");
   const activeStage = stages[activeStageIndex] ?? stages[0];
+  const selectedStage =
+    stages[selectedStageIndex ?? activeStageIndex] ?? stages[activeStageIndex] ?? stages[0];
   const progressPercent = ((activeStageIndex + 1) / stages.length) * 100;
 
   useEffect(() => {
@@ -147,121 +149,106 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="rounded-[5px] border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="max-w-full rounded-[5px] bg-white p-6 shadow-sm">
               <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
-                      Case Progression
-                    </p>
-                  </div>
-                  <div className="rounded-full px-3 py-1 text-sm font-medium text-emerald-700">
-                    7 of 12 stages complete
-                  </div>
-                </div>
+                <div
+                  className="relative overflow-hidden rounded-[5px] p-4"
+                  style={{
+                    backgroundImage: "url('/EIDLexit/Businessman.png')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center bottom",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                >
+                  <div className="absolute inset-0 bg-white/40 backdrop-blur-[4px]" />
 
-                <div className="rounded-[10px] p-4">
-                  <div className="mb-4 flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Current stage</p>
-                      <p className="mt-1 text-base font-semibold text-slate-800">{activeStage.name}</p>
+                  <div className="relative z-10">
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <div>
+                        <p className="text-md font-bold uppercase tracking-[0.2em] text-[#152c58]">
+                          Case Progression
+                        </p>
+                      </div>
+                      <div className="rounded-[5px] border border-slate-200 bg-white/80 px-2 py-1 text-sm font-medium text-emerald-700 shadow-sm backdrop-blur-sm">
+                        7 of 12 stages complete
+                      </div>
                     </div>
-                  </div>
 
-                  <div
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => setIsStageMenuOpen((value) => !value)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault();
-                        setIsStageMenuOpen((value) => !value);
-                      }
-                    }}
-                    className="block w-full overflow-x-auto overflow-y-hidden text-left outline-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                    ref={scrollContainerRef}
-                    style={{ overscrollBehaviorY: "contain" }}
-                  >
-                    <div className="relative mb-3 min-w-[680px] px-1 sm:min-w-0" style={{ scrollBehavior: "auto" }}>
-                      <div className="absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-[10px] bg-slate-200" />
-                      <div
-                        className="absolute left-0 top-1/2 h-1 -translate-y-1/2 rounded-full"
-                        style={{ width: `${progressPercent}%`, backgroundColor: "#152c58" }}
-                      />
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-slate-900">Current stage</p>
+                        <p className="mt-1 text-base font-semibold text-slate-900">{activeStage.name}</p>
+                      </div>
+                    </div>
 
-                      <div className="relative flex min-w-[680px] items-center justify-between gap-1 sm:min-w-0 sm:gap-0">
-                        {stages.map((stage, index) => {
-                          const isComplete = index < activeStageIndex;
-                          const isActive = index === activeStageIndex;
+                    <div
+                      className="block w-full overflow-x-auto overflow-y-hidden text-left outline-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                      ref={scrollContainerRef}
+                      style={{ overscrollBehaviorY: "contain" }}
+                    >
+                      <div className="relative mb-3 min-w-[680px] px-1 sm:min-w-0" style={{ scrollBehavior: "auto" }}>
+                        <div className="absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-[10px] bg-slate-200" />
+                        <div
+                          className="absolute left-0 top-1/2 h-1 -translate-y-1/2 rounded-full"
+                          style={{ width: `${progressPercent}%`, backgroundColor: "#152c58" }}
+                        />
 
-                          return (
-                            <div
-                              key={stage.name}
-                              ref={(node) => {
-                                stageRefs.current[index] = node;
-                              }}
-                              className="group relative flex min-w-0 flex-1 justify-center"
-                            >
-                              <div
-                                className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full border-4 border-white text-[10px] font-bold shadow-sm sm:h-8 sm:w-8 sm:text-xs ${
-                                  isComplete
-                                    ? "text-white"
-                                    : isActive
-                                      ? "text-white"
-                                      : "bg-slate-200 text-slate-600"
-                                }`}
-                                style={
-                                  isComplete
-                                    ? { backgroundColor: "#007b5b" }
-                                    : isActive
-                                      ? { backgroundColor: "#152c58" }
-                                      : undefined
-                                }
+                        <div className="relative flex min-w-[680px] items-center justify-between gap-1 sm:min-w-0 sm:gap-0">
+                          {stages.map((stage, index) => {
+                            const isComplete = index < activeStageIndex;
+                            const isActive = index === activeStageIndex;
+                            const isSelected = (selectedStageIndex ?? activeStageIndex) === index;
+
+                            return (
+                              <button
+                                key={stage.name}
+                                type="button"
+                                onClick={() => setSelectedStageIndex(index)}
+                                ref={(node) => {
+                                  stageRefs.current[index] = node;
+                                }}
+                                className="group relative flex min-w-0 flex-1 justify-center bg-transparent p-0 text-left"
                               >
-                                {isComplete ? "✓" : index + 1}
-                              </div>
+                                <div
+                                  className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full border-4 border-white text-[10px] font-bold shadow-sm sm:h-8 sm:w-8 sm:text-xs ${
+                                    isComplete
+                                      ? "text-white"
+                                      : isActive
+                                        ? "text-white"
+                                        : "bg-slate-200 text-slate-600"
+                                  } ${isSelected ? "ring-2 ring-blue-300 ring-offset-2 ring-offset-white" : ""}`}
+                                  style={
+                                    isComplete
+                                      ? { backgroundColor: "#007b5b" }
+                                      : isActive
+                                        ? { backgroundColor: "#152c58" }
+                                        : undefined
+                                  }
+                                >
+                                  {isComplete ? "✓" : index + 1}
+                                </div>
 
-                              <div className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 w-44 -translate-x-1/2 rounded-[5px] border border-slate-200 bg-slate-900 p-2 text-left opacity-0 shadow-lg transition-all duration-150 group-hover:opacity-100">
-                                <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-300">
-                                  {stage.name}
-                                </p>
-                                <p className="mt-1 text-[10px] leading-4 text-slate-100">{stage.snippet}</p>
-                              </div>
-                            </div>
-                          );
-                        })}
+                                <div className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 w-44 -translate-x-1/2 rounded-[5px] border border-slate-200 bg-slate-900 p-2 text-left opacity-0 shadow-lg transition-all duration-150 group-hover:opacity-100">
+                                  <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-300">
+                                    {stage.name}
+                                  </p>
+                                  <p className="mt-1 text-[10px] leading-4 text-slate-100">{stage.snippet}</p>
+                                </div>
+                              </button>
+                            );
+                          })}
+                        </div>
                       </div>
+                    </div>
+
+                    <div className="mt-3 rounded-[10px] border border-slate-200 bg-white/80 p-3 shadow-sm backdrop-blur-sm">
+                      <p className="mt-1 text-xs font-medium uppercase tracking-[0.12em] text-slate-500">
+                        {selectedStage.name}
+                      </p>
+                      <p className="mt-1 text-sm font-semibold text-slate-800">{selectedStage.name}</p>
+                      <p className="mt-1 text-sm text-slate-700">{selectedStage.snippet}</p>
                     </div>
                   </div>
-
-                  {isStageMenuOpen && (
-                    <div className="mt-2 rounded-[5px] p-3">
-                      <div className="space-y-2">
-                        {stages.map((stage, index) => {
-                          const isComplete = index < activeStageIndex;
-                          const isActive = index === activeStageIndex;
-
-                          return (
-                            <div
-                              key={stage.name}
-                              className={`flex items-center justify-between px-3 py-2 text-sm ${
-                                isActive
-                                  ? "text-blue-700"
-                                  : isComplete
-                                    ? "text-emerald-700"
-                                    : "border-slate-200 bg-slate-50 text-slate-600"
-                              }`}
-                            >
-                              <span className="font-medium">{stage.name}</span>
-                              <span className="text-xs font-semibold uppercase tracking-[0.12em]">
-                                {isComplete ? "Done" : isActive ? "Current" : "Next"}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
                 </div>
 
                 <div>
