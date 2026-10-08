@@ -71,12 +71,13 @@ export default function Home() {
               </h1>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700">
-                Case #EIDL-2048
+            <div className="flex flex-wrap items-center gap-8">
+              <div>
+                  <p className="text-sm font-medium text-slate-500">Client</p>
               </div>
-              <div className="rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
-                Active
+              <div className="flex flex-col items-end">
+                <div className="text-lg font-semibold text-slate-900">Jordan Martinez</div>
+                <div className="text-sm font-medium text-slate-500">Case #EIDL-2048</div>
               </div>
               <button className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-slate-700">
                 View Client Portal
@@ -91,16 +92,6 @@ export default function Home() {
           <section className="space-y-6">
             <div className="rounded-[5px] border-slate-200 px-6 py-2">
               <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-                <div>
-                  <p className="text-sm font-medium text-slate-500">Client</p>
-                  <h2 className="mt-1 text-2xl font-semibold">Jordan Martinez</h2>
-                </div>
-
-                <div className="flex flex-col items-start gap-1">
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Current Stage</p>
-                  <p className="text-lg font-semibold text-blue-700">Consultant Review</p>
-                </div>
-                <p className="text-sm text-slate-500">Updated 2 hours ago</p>
               </div>
             </div>
 
@@ -111,21 +102,17 @@ export default function Home() {
                     <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
                       Case Progression
                     </p>
-                    <h3 className="mt-2 text-xl font-semibold">12-Stage Workflow</h3>
                   </div>
-                  <div className="rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
+                  <div className="rounded-full px-3 py-1 text-sm font-medium text-emerald-700">
                     7 of 12 stages complete
                   </div>
                 </div>
 
-                <div className="rounded-2xl bg-slate-50 p-4">
+                <div className="rounded-[10px] p-4">
                   <div className="mb-4 flex items-center justify-between gap-3">
                     <div>
                       <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Current stage</p>
                       <p className="mt-1 text-base font-semibold text-slate-800">{activeStage.name}</p>
-                    </div>
-                    <div className="rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700">
-                      Stage {activeStageIndex + 1} of {stages.length}
                     </div>
                   </div>
 
@@ -137,8 +124,8 @@ export default function Home() {
                     <div className="relative mb-3 px-1">
                       <div className="absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-slate-200" />
                       <div
-                        className="absolute left-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-blue-600"
-                        style={{ width: `${progressPercent}%` }}
+                        className="absolute left-0 top-1/2 h-1 -translate-y-1/2 rounded-full"
+                        style={{ width: `${progressPercent}%`, backgroundColor: "#152c58" }}
                       />
 
                       <div className="relative flex items-center justify-between">
@@ -151,11 +138,18 @@ export default function Home() {
                               <div
                                 className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-4 border-white text-xs font-bold shadow-sm ${
                                   isComplete
-                                    ? "bg-emerald-500 text-white"
+                                    ? "text-white"
                                     : isActive
-                                      ? "bg-blue-600 text-white"
+                                      ? "text-white"
                                       : "bg-slate-200 text-slate-600"
                                 }`}
+                                style={
+                                  isComplete
+                                    ? { backgroundColor: "#007b5b" }
+                                    : isActive
+                                      ? { backgroundColor: "#152c58" }
+                                      : undefined
+                                }
                               >
                                 {isComplete ? "✓" : index + 1}
                               </div>
@@ -248,7 +242,7 @@ export default function Home() {
                 </div>
                 <p className="mt-3 text-sm font-medium text-slate-700">Upload supporting documents</p>
                 <p className="mt-1 text-xs text-slate-500">PDF, DOCX, JPG up to 25MB each</p>
-                <button className="mt-4 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500">
+                <button className="mt-4 rounded-xl bg-[#152c58] px-4 py-2 text-sm font-medium text-white hover:opacity-70">
                   Select Files
                 </button>
               </div>
@@ -260,8 +254,8 @@ export default function Home() {
                     className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2"
                   >
                     <span className="truncate text-sm text-slate-700">{file}</span>
-                    <span className="rounded-full bg-emerald-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-700">
-                      Ready
+                    <span className="rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-700">
+                      uploaded
                     </span>
                   </div>
                 ))}
