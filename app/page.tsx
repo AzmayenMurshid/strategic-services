@@ -101,7 +101,7 @@ export default function Home() {
                 </button>
 
                 {isProfileMenuOpen && (
-                  <div className="absolute right-0 z-20 mt-2 w-64 rounded-xl border border-slate-200 bg-white p-4 shadow-lg">
+                  <div className="absolute left-0 right-auto z-20 mt-2 w-[min(18rem,calc(100vw-1.5rem))] rounded-xl border border-slate-200 bg-white p-4 shadow-lg sm:right-0 sm:left-auto">
                     <p className="text-xs font-medium uppercase tracking-[0.16em] text-slate-400">
                       Client Profile
                     </p>
