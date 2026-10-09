@@ -71,7 +71,7 @@ export function DashboardHeader({
             type="button"
             aria-label="Open mobile navigation"
             onClick={() => setIsMobileNavOpen(true)}
-            className="flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-[5px] border border-white/20 bg-white/5 text-2xl text-white transition hover:bg-white/10"
+            className="flex h-[3.25rem] w-[3.25rem] items-center justify-center text-2xl text-white transition hover:bg-slate-900"
           >
             ☰
           </button>
