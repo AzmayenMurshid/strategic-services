@@ -62,6 +62,7 @@ const docStyles: Record<string, string> = {
 export default function Home() {
   const [isRequirementsModalOpen, setIsRequirementsModalOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [selectedStageIndex, setSelectedStageIndex] = useState<number | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const stageRefs = useRef<Array<HTMLElement | null>>([]);
@@ -93,30 +94,30 @@ export default function Home() {
     <div className="min-h-screen overflow-x-hidden bg-slate-100 text-slate-900">
       <header className="w-full border-b border-slate-200 bg-[#152c58] px-4 py-3 shadow-sm sm:px-6 sm:py-5">
         <div className="mx-auto max-w-[1600px]">
-          <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+          <div className="hidden lg:flex lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex min-w-0 items-center gap-3">
               <img
                 src="EIDLexit/logo.png"
                 alt="EIDLexit logo"
-                className="h-[8rem] w-auto max-w-full object-contain sm:h-16"
+                className="h-16 w-auto max-w-full object-contain"
               />
-              <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-white sm:text-base">
+              <p className="text-base font-medium uppercase tracking-[0.2em] text-white">
                 Strategic Services
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+            <div className="flex flex-wrap items-center gap-4">
               <div className="relative">
                 <button
                   type="button"
                   aria-label="Open client profile"
                   onClick={() => setIsProfileMenuOpen((value) => !value)}
-                  className="flex max-w-full items-center gap-2 rounded-[5px] px-2 py-1.5 text-left shadow-lg transition hover:border-slate-300 hover:bg-slate-900 sm:px-3 sm:py-2"
+                  className="flex max-w-full items-center gap-2 rounded-[5px] px-3 py-2 text-left shadow-lg transition hover:border-slate-300 hover:bg-slate-900"
                 >
-                  <span className="shrink-0 text-[8px] font-medium uppercase tracking-[0.12em] text-slate-400 sm:text-xs">
+                  <span className="shrink-0 text-[10px] font-medium uppercase tracking-[0.12em] text-slate-400">
                     {isProfileMenuOpen ? "" : "Profile"}
                   </span>
-                  <span className="ml-1 truncate text-sm font-semibold text-slate-100 sm:ml-2 sm:text-lg">Jordan Martinez</span>
+                  <span className="ml-2 truncate text-lg font-semibold text-slate-100">Jordan Martinez</span>
                 </button>
 
                 {isProfileMenuOpen && (
@@ -135,7 +136,84 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          <div className="flex items-center justify-between lg:hidden">
+            <div className="flex min-w-0 items-center gap-2">
+              <img
+                src="EIDLexit/logo.png"
+                alt="EIDLexit logo"
+                className="h-8 w-auto max-w-full object-contain"
+              />
+              <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-white">
+                Strategic Services
+              </p>
+            </div>
+
+            <button
+              type="button"
+              aria-label="Open mobile navigation"
+              onClick={() => setIsMobileNavOpen(true)}
+              className="flex h-9 w-9 items-center justify-center rounded-[5px] border border-white/20 bg-white/5 text-lg text-white transition hover:bg-white/10"
+            >
+              ☰
+            </button>
+          </div>
         </div>
+
+        {isMobileNavOpen && (
+          <div className="fixed inset-0 z-50 lg:hidden" onClick={() => setIsMobileNavOpen(false)}>
+            <div className="fixed inset-0 bg-slate-900/50" />
+            <aside
+              className="fixed left-0 top-0 z-10 h-full w-[82vw] max-w-xs bg-[#152c58] p-4 text-white shadow-2xl"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="flex items-center justify-between border-b border-white/15 pb-4">
+                <div className="flex items-center gap-3">
+                  <img src="EIDLexit/logo.png" alt="EIDLexit logo" className="h-10 w-auto object-contain" />
+                  <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-white">
+                    Strategic Services
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  aria-label="Close mobile navigation"
+                  onClick={() => setIsMobileNavOpen(false)}
+                  className="flex h-8 w-8 items-center justify-center text-white"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <nav className="mt-6 space-y-2">
+                {[
+                  "Overview",
+                  "Case Progression",
+                  "Needed from Client",
+                  "Upload Packet",
+                  "Recent Updates",
+                ].map((item) => (
+                  <button
+                    key={item}
+                    type="button"
+                    onClick={() => setIsMobileNavOpen(false)}
+                    className="flex w-full items-center justify-between rounded-[5px] border border-white/10 bg-white/5 px-3 py-2 text-left text-sm font-medium text-slate-100 transition hover:bg-white/10"
+                  >
+                    <span>{item}</span>
+                    <span className="text-slate-300">›</span>
+                  </button>
+                ))}
+              </nav>
+
+              <div className="mt-8 rounded-[5px] border border-white/15 bg-white/5 p-3">
+                <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-slate-300">
+                  Client Profile
+                </p>
+                <p className="mt-2 text-base font-semibold text-white">Jordan Martinez</p>
+                <p className="mt-1 text-sm text-slate-200">Case #EIDL-2048</p>
+              </div>
+            </aside>
+          </div>
+        )}
       </header>
 
       <div className="mx-auto max-w-full px-4 py-8 sm:px-6 lg:px-8">
