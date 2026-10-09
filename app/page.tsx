@@ -19,11 +19,8 @@ const stages = [
 
 const requiredDocs = [
   { label: "Financial overview packet", status: "Received", tone: "green" },
-  { label: "Business tax returns", status: "Needed", tone: "amber" },
-  { label: "Bank statements", status: "Received", tone: "green" },
-  { label: "Owner payroll records", status: "Needed", tone: "amber" },
-  { label: "Legal entity documents", status: "Pending", tone: "slate" },
-  { label: "Consultant follow-up items", status: "New", tone: "blue" },
+  { label: "Business tax returns", status: "Required", tone: "red" },
+  { label: "Bank statements", status: "Recommended", tone: "amber" },
 ];
 
 const documentRequirements = [
@@ -94,18 +91,18 @@ export default function Home() {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-100 text-slate-900">
-      <header className="w-full border-b border-slate-200 bg-white px-4 py-5 shadow-sm sm:px-6">
+      <header className="w-full border-b border-slate-200 bg-[#152c58] px-4 shadow-sm sm:px-6">
         <div className="mx-auto max-w-[1600px]">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="min-w-0">
-              <p className="text-sm font-medium uppercase tracking-[0.2em] text-blue-600">
+            <div className="flex min-w-0 items-center gap-3">
+              <img
+                src="EIDLexit/logo.png"
+                alt="EIDLexit logo"
+                className="min-h-[8rem] w-auto max-w-full object-contain sm:h-16"
+              />
+              <p className="text-sm font-medium uppercase tracking-[0.2em] text-white sm:text-base">
                 Strategic Services
               </p>
-              <img
-                src="https://eidlexit.com/hubfs/Branding%20Marketing%20Files/Logo-signature-120px.png"
-                alt="EIDLexit logo"
-                className="mt-2 h-10 w-auto max-w-full object-contain sm:h-12"
-              />
             </div>
 
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
@@ -114,16 +111,16 @@ export default function Home() {
                   type="button"
                   aria-label="Open client profile"
                   onClick={() => setIsProfileMenuOpen((value) => !value)}
-                  className="flex max-w-full items-center gap-2 rounded-[5px] bg-white px-3 py-2 text-left shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                  className="flex max-w-full items-center gap-2 rounded-[5px] px-3 py-2 text-left shadow-lg transition hover:border-slate-300 hover:bg-slate-900"
                 >
-                  <span className="truncate text-base font-semibold text-slate-900 sm:text-lg">Jordan Martinez</span>
                   <span className="shrink-0 text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500 sm:text-xs">
                     {isProfileMenuOpen ? "" : "Profile"}
                   </span>
+                  <span className="ml-2 truncate text-base font-semibold text-slate-100 sm:text-lg">Jordan Martinez</span>
                 </button>
 
                 {isProfileMenuOpen && (
-                  <div className="absolute left-0 right-auto z-20 mt-2 w-[min(18rem,calc(100vw-1.5rem))] rounded-xl border border-slate-200 bg-white p-4 shadow-lg sm:right-0 sm:left-auto">
+                  <div className="absolute left-0 right-auto z-20 mt-2 w-[min(18rem,calc(100vw-1.5rem))] rounded-[5px] bg-white p-4 shadow-xl sm:right-0 sm:left-auto">
                     <p className="text-xs font-medium uppercase tracking-[0.16em] text-slate-400">
                       Client Profile
                     </p>
@@ -152,7 +149,7 @@ export default function Home() {
             <div className="max-w-full rounded-[5px] bg-white p-6 shadow-sm">
               <div className="space-y-6">
                 <div
-                  className="relative overflow-hidden rounded-[5px] p-4"
+                  className="relative overflow-hidden rounded-[5px] py-4 px-4"
                   style={{
                     backgroundImage: "url('/EIDLexit/Businessman.png')",
                     backgroundSize: "cover",
@@ -174,7 +171,7 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="mb-4 flex items-center justify-between gap-3">
+                    <div className="flex items-center justify-between gap-3 mb-[10px]">
                       <div>
                         <p className="text-xs uppercase tracking-[0.2em] text-slate-900">Current stage</p>
                         <p className="mt-1 text-base font-semibold text-slate-900">{activeStage.name}</p>
@@ -242,8 +239,20 @@ export default function Home() {
                     </div>
 
                     <div className="mt-3 rounded-[10px] border border-slate-200 bg-white/80 p-3 shadow-sm backdrop-blur-sm">
-                      <p className="mt-1 text-xs font-medium uppercase tracking-[0.12em] text-slate-500">
-                        {selectedStage.name}
+                      <p
+                        className={`text-xs font-medium uppercase tracking-[0.12em] ${
+                          selectedStage.status === "complete"
+                            ? "text-emerald-600"
+                            : selectedStage.status === "active"
+                              ? "text-[#152c58]"
+                              : "text-slate-500"
+                        }`}
+                      >
+                        {selectedStage.status === "complete"
+                          ? "Completed"
+                          : selectedStage.status === "active"
+                            ? "In Progress"
+                            : "Upcoming"}
                       </p>
                       <p className="mt-1 text-sm font-semibold text-slate-800">{selectedStage.name}</p>
                       <p className="mt-1 text-sm text-slate-700">{selectedStage.snippet}</p>
@@ -259,7 +268,7 @@ export default function Home() {
                     <button
                       type="button"
                       onClick={() => setIsRequirementsModalOpen(true)}
-                      className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                      className="rounded-xl border border-slate-200 bg-[#152c58] px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-900"
                     >
                       View all requirements
                     </button>
@@ -269,11 +278,24 @@ export default function Home() {
                     {requiredDocs.map((doc) => (
                       <div
                         key={doc.label}
-                        className="flex items-center justify-between rounded-2xl p-1px"
+                        className="flex items-center justify-between gap-3"
                       >
                         <div>
                           <p className="font-medium text-slate-800">{doc.label}</p>
                         </div>
+                        <span
+                          className={`inline-flex px-0 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${
+                            doc.tone === "green"
+                              ? "text-emerald-600"
+                              : doc.tone === "red"
+                                ? "text-[#da0101]"
+                                : doc.tone === "amber"
+                                  ? "text-amber-600"
+                                  : "text-slate-600"
+                          }`}
+                        >
+                          {doc.status}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -369,26 +391,26 @@ export default function Home() {
 
       {isRequirementsModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-3 sm:p-4"
           onClick={() => setIsRequirementsModalOpen(false)}
         >
           <div
-            className="w-full max-w-2xl rounded-[5px] border border-slate-200 bg-white p-6 shadow-2xl"
+            className="w-full max-w-2xl rounded-[5px] border border-slate-200 bg-white p-4 shadow-2xl sm:p-6"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-slate-500 sm:text-sm">
                   Upload checklist
                 </p>
-                <h2 className="mt-2 text-2xl font-semibold text-slate-900">
+                <h2 className="mt-2 text-xl font-semibold text-slate-900 sm:text-2xl">
                   Required and recommended documents
                 </h2>
               </div>
               <button
                 type="button"
                 onClick={() => setIsRequirementsModalOpen(false)}
-                className="rounded-full border border-slate-200 p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
+                className="shrink-0 rounded-full border border-slate-200 p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
                 aria-label="Close requirements popup"
               >
                 ✕
@@ -398,18 +420,20 @@ export default function Home() {
             <div className="mt-5">
               {documentRequirements.map((doc, index) => (
                 <div key={doc.label} className="py-3 first:pt-0 last:pb-0">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="min-w-0">
                       <p className="font-medium text-slate-800">{doc.label}</p>
                       <p className="mt-1 text-sm text-slate-600">{doc.note}</p>
                     </div>
                     <span
-                      className={`shrink-0 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${
+                      className={`shrink-0 self-start px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${
                         doc.type === "Required"
                           ? "text-[#da0101]"
                           : doc.type === "Received"
                             ? "text-[#007b5b]"
-                            : "text-[#1d4ed8]"
+                            : doc.type === "Recommended"
+                              ? "text-[#f59e0b]"
+                              : "text-slate-600"
                       }`}
                     >
                       {doc.type}
