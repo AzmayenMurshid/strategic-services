@@ -10,7 +10,7 @@ export function DashboardHeader({
   setIsMobileNavOpen,
 }: DashboardHeaderProps) {
   return (
-    <header className="w-full border-b border-slate-200 bg-[#152c58] px-4 py-3 shadow-sm sm:px-6 sm:py-5">
+    <header className="w-full border-b border-slate-200 bg-[#152c58] px-8 py-7 shadow-sm sm:px-6 sm:py-5">
       <div className="mx-auto max-w-[1600px]">
         <div className="hidden lg:flex lg:flex-row lg:items-center lg:justify-between">
           <div className="flex min-w-0 items-center gap-3">
@@ -56,13 +56,13 @@ export function DashboardHeader({
         </div>
 
         <div className="flex items-center justify-between lg:hidden">
-          <div className="flex min-w-0 items-center gap-2">
+          <div className="flex min-w-0 items-center gap-4">
             <img
               src="EIDLexit/logo.png"
               alt="EIDLexit logo"
-              className="h-8 w-auto max-w-full object-contain"
+              className="h-12 w-auto max-w-full object-contain"
             />
-            <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-white">
+            <p className="text-base font-medium uppercase tracking-[0.18em] text-white">
               Strategic Services
             </p>
           </div>
@@ -71,7 +71,7 @@ export function DashboardHeader({
             type="button"
             aria-label="Open mobile navigation"
             onClick={() => setIsMobileNavOpen(true)}
-            className="flex h-9 w-9 items-center justify-center rounded-[5px] border border-white/20 bg-white/5 text-lg text-white transition hover:bg-white/10"
+            className="flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-[5px] border border-white/20 bg-white/5 text-2xl text-white transition hover:bg-white/10"
           >
             ☰
           </button>
