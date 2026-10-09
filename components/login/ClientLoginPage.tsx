@@ -17,13 +17,13 @@ export default function ClientLoginPage() {
         <section className="relative z-10 mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-6xl items-center px-4 py-10 sm:min-h-[calc(100vh-3.5rem)] sm:px-6 lg:px-8">
           <div className="w-full overflow-hidden rounded-[5px] border border-slate-200 bg-white shadow-xl">
             <div className="grid lg:grid-cols-[1.15fr_0.85fr]">
-              <div className="bg-[#152c58] p-8 text-slate-100 sm:p-5 lg:p-10">
-                <div className="mb-[2rem] mt-10 flex items-center gap-4 text-sm text-slate-200">
-                  <img src="/EIDLexit/logo.png" alt="EIDLexit icon" className="h-[8rem] w-[8rem] rounded-md p-1" />
+              <div className="bg-[#152c58] p-5 text-slate-100 sm:p-6 lg:p-10">
+                <div className="mb-4 mt-2 flex items-center gap-4 text-sm text-slate-200 sm:mb-6 sm:mt-4 lg:mb-[2rem] lg:mt-10">
+                  <img src="/EIDLexit/logo.png" alt="EIDLexit icon" className="h-20 w-20 rounded-md p-1 sm:h-24 sm:w-24 lg:h-[8rem] lg:w-[8rem]" />
                 </div>
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-300">Client Portal</p>
-                <h1 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">Strategic Services</h1>
-                <p className="mt-4 max-w-md text-sm text-slate-200 sm:text-base">
+                <h1 className="mt-3 text-2xl font-semibold leading-tight sm:mt-4 sm:text-3xl lg:text-4xl">Strategic Services</h1>
+                <p className="mt-3 max-w-md text-sm text-slate-200 sm:mt-4 sm:text-base">
                   Sign in with your client details to review case progress, document requirements, and recent updates.
                 </p>
               </div>
