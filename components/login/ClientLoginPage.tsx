@@ -1,7 +1,54 @@
+"use client";
+
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SiteFooter from "@/components/shared/SiteFooter";
 
 export default function ClientLoginPage() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setErrorMessage(null);
+    setIsLoading(true);
+
+    const formData = new FormData(event.currentTarget);
+    const firstName = String(formData.get("firstName") ?? "");
+    const lastName = String(formData.get("lastName") ?? "");
+    const recordId = String(formData.get("recordId") ?? "");
+
+    try {
+      const response = await fetch("/api/v1/auth/client-login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ firstName, lastName, recordId }),
+      });
+
+      const result = (await response.json()) as {
+        data?: { id: string };
+        error?: { message?: string };
+      };
+
+      if (!response.ok) {
+        setErrorMessage(result.error?.message ?? "Unable to log in with the provided information.");
+        return;
+      }
+
+      const contactId = result.data?.id;
+      const destination = contactId ? `/dashboard?contactId=${encodeURIComponent(contactId)}` : "/dashboard";
+      router.push(destination);
+    } catch {
+      setErrorMessage("Unable to reach the login service. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900">
       <main className="relative overflow-hidden">
@@ -32,7 +79,7 @@ export default function ClientLoginPage() {
                 <h2 className="text-2xl font-semibold text-slate-900">Client Login</h2>
                 <p className="mt-2 text-sm text-slate-600">Enter your legal name and client ID exactly as provided.</p>
 
-                <form className="mt-8 space-y-5" action="/dashboard" method="get">
+                <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
                   <div>
                     <label htmlFor="firstName" className="mb-2 block text-sm font-medium text-slate-700">
                       First Name
@@ -44,7 +91,7 @@ export default function ClientLoginPage() {
                       autoComplete="given-name"
                       required
                       className="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-[#152c58] focus:ring-2 focus:ring-[#152c58]/20"
-                      placeholder="Jane"
+                      placeholder="First Name"
                     />
                   </div>
 
@@ -59,32 +106,35 @@ export default function ClientLoginPage() {
                       autoComplete="family-name"
                       required
                       className="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-[#152c58] focus:ring-2 focus:ring-[#152c58]/20"
-                      placeholder="Doe"
+                      placeholder="Last Name"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="clientId" className="mb-2 block text-sm font-medium text-slate-700">
-                      Client ID
+                    <label htmlFor="recordId" className="mb-2 block text-sm font-medium text-slate-700">
+                      Record ID
                     </label>
                     <input
-                      id="clientId"
-                      name="clientId"
+                      id="recordId"
+                      name="recordId"
                       type="text"
                       inputMode="numeric"
                       required
                       className="w-full rounded-md border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-[#152c58] focus:ring-2 focus:ring-[#152c58]/20"
-                      placeholder="CID-2041"
+                      placeholder="127309759174"
                     />
                   </div>
 
                   <button
                     type="submit"
+                    disabled={isLoading}
                     className="mt-2 w-full rounded-md bg-[#152c58] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#0f2246]"
                   >
-                    Sign In
+                    {isLoading ? "Signing In..." : "Sign In"}
                   </button>
                 </form>
+
+                {errorMessage && <p className="mt-4 text-sm font-medium text-red-600">{errorMessage}</p>}
 
                 <p className="mt-6 text-center text-sm text-slate-600">
                   Need help accessing your portal?{" "}

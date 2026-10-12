@@ -1,8 +1,19 @@
 type MobileNavProps = {
   setIsMobileNavOpen: (value: boolean) => void;
+  clientProfile: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    phone: string | null;
+  } | null;
 };
 
-export function MobileNav({ setIsMobileNavOpen }: MobileNavProps) {
+export function MobileNav({ setIsMobileNavOpen, clientProfile }: MobileNavProps) {
+  const fullName = clientProfile
+    ? `${clientProfile.firstName} ${clientProfile.lastName}`.trim()
+    : "";
+  const caseLabel = clientProfile?.id ? `Case #${clientProfile.id}` : "";
+
   return (
     <div className="fixed inset-0 z-50 lg:hidden" onClick={() => setIsMobileNavOpen(false)}>
       <div className="fixed inset-0 bg-slate-900/50" />
@@ -51,8 +62,15 @@ export function MobileNav({ setIsMobileNavOpen }: MobileNavProps) {
           <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-slate-300">
             Client Profile
           </p>
-          <p className="mt-2 text-base font-semibold text-white">Jordan Martinez</p>
-          <p className="mt-1 text-sm text-slate-200">Case #EIDL-2048</p>
+          {clientProfile ? (
+            <>
+              <p className="mt-2 text-base font-semibold text-white">{fullName}</p>
+              <p className="mt-1 text-sm text-slate-200">{caseLabel}</p>
+              <p className="mt-1 text-sm text-slate-200">Phone: {clientProfile.phone ?? "Not available"}</p>
+            </>
+          ) : (
+            <p className="mt-2 text-sm text-slate-200">No client profile loaded.</p>
+          )}
         </div>
       </aside>
     </div>

@@ -2,13 +2,24 @@ type DashboardHeaderProps = {
   isProfileMenuOpen: boolean;
   setIsProfileMenuOpen: (value: boolean) => void;
   setIsMobileNavOpen: (value: boolean) => void;
+  clientProfile: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string | null;
+    phone: string | null;
+  } | null;
 };
 
 export function DashboardHeader({
   isProfileMenuOpen,
   setIsProfileMenuOpen,
   setIsMobileNavOpen,
+  clientProfile,
 }: DashboardHeaderProps) {
+  const fullName = clientProfile ? `${clientProfile.firstName} ${clientProfile.lastName}`.trim() : "";
+  const caseLabel = clientProfile?.id ? `Case #${clientProfile.id}` : "";
+
   return (
     <header className="w-full border-b border-slate-200 bg-[#152c58] px-8 py-7 shadow-sm sm:px-6 sm:py-5">
       <div className="mx-auto max-w-[1600px]">
@@ -35,7 +46,7 @@ export function DashboardHeader({
                 <span className="shrink-0 text-[10px] font-medium uppercase tracking-[0.12em] text-slate-400">
                   {isProfileMenuOpen ? "" : "Profile"}
                 </span>
-                <span className="ml-2 truncate text-lg font-semibold text-slate-100">Jordan Martinez</span>
+                <span className="ml-2 truncate text-lg font-semibold text-slate-100">{fullName || "Client"}</span>
               </button>
 
               {isProfileMenuOpen && (
@@ -43,12 +54,18 @@ export function DashboardHeader({
                   <p className="text-xs font-medium uppercase tracking-[0.16em] text-slate-400">
                     Client Profile
                   </p>
-                  <p className="mt-2 text-lg font-semibold text-slate-900">Jordan Martinez</p>
-                  <p className="mt-1 text-sm text-slate-600">Case #EIDL-2048</p>
-                  <div className="mt-4 space-y-2 border-t border-slate-200 pt-3">
-                    <p className="text-sm text-slate-700">Email: jordan.martinez@email.com</p>
-                    <p className="text-sm text-slate-700">Phone: (555) 204-4421</p>
-                  </div>
+                  {clientProfile ? (
+                    <>
+                      <p className="mt-2 text-lg font-semibold text-slate-900">{fullName}</p>
+                      <p className="mt-1 text-sm text-slate-600">{caseLabel}</p>
+                      <div className="mt-4 space-y-2 border-t border-slate-200 pt-3">
+                        <p className="text-sm text-slate-700">Email: {clientProfile.email ?? "Not available"}</p>
+                        <p className="text-sm text-slate-700">Phone: {clientProfile.phone ?? "Not available"}</p>
+                      </div>
+                    </>
+                  ) : (
+                    <p className="mt-2 text-sm text-slate-600">No client profile loaded.</p>
+                  )}
                 </div>
               )}
             </div>
@@ -71,7 +88,7 @@ export function DashboardHeader({
             type="button"
             aria-label="Open mobile navigation"
             onClick={() => setIsMobileNavOpen(true)}
-            className="flex h-[3.75rem] w-[3.75rem] items-center justify-center text-2xl text-white transition hover:bg-slate-900"
+            className="flex h-[3.25rem] w-[3.25rem] items-center justify-center text-2xl text-white transition hover:bg-slate-900"
           >
             ☰
           </button>

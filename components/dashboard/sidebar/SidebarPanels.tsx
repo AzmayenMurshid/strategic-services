@@ -36,7 +36,11 @@ export function UploadPacket() {
   );
 }
 
-export function ClientSnapshot() {
+type ClientSnapshotProps = {
+  consultantName: string | null;
+};
+
+export function ClientSnapshot({ consultantName }: ClientSnapshotProps) {
   return (
     <div className="rounded-[5px] border border-slate-200 bg-white p-6 shadow-sm">
       <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
@@ -53,7 +57,7 @@ export function ClientSnapshot() {
 
         <div>
           <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Consultant</p>
-          <p className="mt-1 font-medium text-slate-800">Alicia Thompson</p>
+          <p className="mt-1 font-medium text-slate-800">{consultantName ?? "Not assigned"}</p>
         </div>
 
         <div>

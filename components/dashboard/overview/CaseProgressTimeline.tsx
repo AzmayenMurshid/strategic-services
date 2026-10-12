@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { stages } from "../data";
 
 type CaseProgressTimelineProps = {
@@ -12,12 +12,14 @@ export function CaseProgressTimeline({
   selectedStageIndex,
   setSelectedStageIndex,
 }: CaseProgressTimelineProps) {
+  const [hoveredStageIndex, setHoveredStageIndex] = useState<number | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const stageRefs = useRef<Array<HTMLElement | null>>([]);
   const activeStageIndex = stages.findIndex((stage) => stage.status === "active");
   const activeStage = stages[activeStageIndex] ?? stages[0];
+  const previewStageIndex = hoveredStageIndex ?? selectedStageIndex ?? activeStageIndex;
   const selectedStage =
-    stages[selectedStageIndex ?? activeStageIndex] ?? stages[activeStageIndex] ?? stages[0];
+    stages[previewStageIndex] ?? stages[activeStageIndex] ?? stages[0];
   const progressPercent = ((activeStageIndex + 1) / stages.length) * 100;
 
   useEffect(() => {
@@ -37,6 +39,14 @@ export function CaseProgressTimeline({
       behavior: "auto",
     });
   }, [activeStageIndex]);
+
+  const handleStageClick = (index: number) => {
+    if (typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches) {
+      return;
+    }
+
+    setSelectedStageIndex(index);
+  };
 
   return (
     <div className="space-y-6">
@@ -92,7 +102,11 @@ export function CaseProgressTimeline({
                     <button
                       key={stage.name}
                       type="button"
-                      onClick={() => setSelectedStageIndex(index)}
+                      onClick={() => handleStageClick(index)}
+                      onMouseEnter={() => setHoveredStageIndex(index)}
+                      onMouseLeave={() => setHoveredStageIndex(null)}
+                      onFocus={() => setHoveredStageIndex(index)}
+                      onBlur={() => setHoveredStageIndex(null)}
                       ref={(node) => {
                         stageRefs.current[index] = node;
                       }}

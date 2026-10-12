@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { DashboardHeader } from "./header/DashboardHeader";
 import { MobileNav } from "./header/MobileNav";
 import { CaseProgressTimeline } from "./overview/CaseProgressTimeline";
@@ -10,11 +11,63 @@ import { RequirementsModal } from "./modals/RequirementsModal";
 import { ClientSnapshot, UploadPacket } from "./sidebar/SidebarPanels";
 import SiteFooter from "@/components/shared/SiteFooter";
 
+type DashboardClientProfile = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string | null;
+  phone: string | null;
+  hubspotOwnerId: string | null;
+  consultantName: string | null;
+};
+
 export default function ClientDashboard() {
+  const searchParams = useSearchParams();
   const [isRequirementsModalOpen, setIsRequirementsModalOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [selectedStageIndex, setSelectedStageIndex] = useState<number | null>(null);
+  const [clientProfile, setClientProfile] = useState<DashboardClientProfile | null>(null);
+
+  useEffect(() => {
+    const contactId = searchParams.get("contactId");
+
+    if (!contactId) {
+      setClientProfile(null);
+      return;
+    }
+
+    let isCancelled = false;
+
+    const loadClientProfile = async () => {
+      try {
+        const response = await fetch(`/api/v1/clients/${encodeURIComponent(contactId)}`);
+
+        if (!response.ok) {
+          if (!isCancelled) {
+            setClientProfile(null);
+          }
+          return;
+        }
+
+        const result = (await response.json()) as { data?: DashboardClientProfile };
+
+        if (!isCancelled) {
+          setClientProfile(result.data ?? null);
+        }
+      } catch {
+        if (!isCancelled) {
+          setClientProfile(null);
+        }
+      }
+    };
+
+    loadClientProfile();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [searchParams]);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-100 text-slate-900">
@@ -22,9 +75,10 @@ export default function ClientDashboard() {
         isProfileMenuOpen={isProfileMenuOpen}
         setIsProfileMenuOpen={setIsProfileMenuOpen}
         setIsMobileNavOpen={setIsMobileNavOpen}
+        clientProfile={clientProfile}
       />
 
-      {isMobileNavOpen && <MobileNav setIsMobileNavOpen={setIsMobileNavOpen} />}
+      {isMobileNavOpen && <MobileNav setIsMobileNavOpen={setIsMobileNavOpen} clientProfile={clientProfile} />}
 
       <div className="mx-auto max-w-full px-4 py-8 sm:px-6 lg:px-8">
         <main className="grid min-w-0 gap-6 xl:grid-cols-[1.5fr_0.8fr]">
@@ -49,7 +103,7 @@ export default function ClientDashboard() {
 
           <aside className="min-w-0 space-y-6">
             <UploadPacket />
-            <ClientSnapshot />
+            <ClientSnapshot consultantName={clientProfile?.consultantName ?? null} />
           </aside>
         </main>
       </div>

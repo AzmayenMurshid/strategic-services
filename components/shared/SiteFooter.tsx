@@ -1,3 +1,5 @@
+"use client";
+
 export default function SiteFooter() {
   return (
     <footer className="border-t border-slate-200 bg-[#152c58] text-slate-100">
