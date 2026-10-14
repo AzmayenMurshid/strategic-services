@@ -135,7 +135,8 @@ const outcomeDocumentMap: Record<
       { label: "P&L sheet", type: "Required", note: "Profit and Loss sheet for one year." },
       { label: "Balance sheet", type: "Required", note: "Most recent Balance sheet." },
       { label: "Business tax returns", type: "Required", note: "Most recent filed returns for the business entity and supporting financial review." },
-      { label: "Bank statements", type: "Recommended", note: "Recent statements to confirm cash flow and account activity." },
+      { label: "Business bank statements", type: "Recommended", note: "Recent statements to confirm business cash flow and account activity." },
+      { label: "Personal bank statements", type: "Recommended", note: "Recent statements to confirm personal cash flow and account activity." },
       { label: "Owner payroll records", type: "Recommended", note: "Owner compensation and payroll verification for the business." },
 
     ],
@@ -150,9 +151,12 @@ const outcomeDocumentMap: Record<
     ],
     documentRequirements: [
       { label: "Strategy Session Personal Questionnaire", type: "Required", note: "Primary source for debtor details, personal assets, income, and filing-related facts." },
+      { label: "Business tax returns", type: "Required", note: "Most recent filed returns for the business entity and supporting financial review." },
+      { label: "Personal tax returns", type: "Required", note: "Most recent filed returns for the individual and supporting financial review." },
       { label: "Client workbook / personal financial summary", type: "Received", note: "Ground truth for the means test, personal asset values, and personal debt overview." },
       { label: "Transcript or case handoff notes", type: "Required", note: "Used to close gaps, capture client context, and record key issues for the strategy session." },
-      { label: "Bank statements", type: "Recommended", note: "Supports the review of personal cash flow and financial account activity." },
+      { label: "Business bank statements", type: "Recommended", note: "Supports the review of business cash flow and financial account activity." },
+      { label: "Personal bank statements", type: "Recommended", note: "Supports the review of personal cash flow and financial account activity." },
     ],
   },
   "save-or-exit": {
@@ -167,7 +171,11 @@ const outcomeDocumentMap: Record<
       { label: "Business P&L and balance sheet", type: "Required", note: "Required to evaluate both the save path and the liquidation / asset picture." },
       { label: "Strategy Session Personal Questionnaire", type: "Required", note: "Needed for the personal exit picture, means test, and debtor profile." },
       { label: "Client workbook / both-path summary", type: "Received", note: "Ground truth for both the business and personal path analysis." },
-      { label: "Bank statements", type: "Recommended", note: "Helps validate cash flow and recent account activity for either path." },
+      { label: "Business tax returns", type: "Required", note: "Most recent filed returns for the business entity and supporting financial review." },
+      { label: "Personal tax returns", type: "Required", note: "Most recent filed returns for the individual and supporting financial review." },
+      { label: "Business bank statements", type: "Recommended", note: "Helps validate business cash flow and recent account activity for either path." },
+      { label: "Personal bank statements", type: "Recommended", note: "Helps validate personal cash flow and recent account activity for either path." },
+      
     ],
   },
 };
