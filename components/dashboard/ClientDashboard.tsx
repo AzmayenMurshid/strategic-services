@@ -123,10 +123,7 @@ export default function ClientDashboard() {
                   serviceKey={serviceKey}
                 />
 
-                <NeededFromClient
-                  onViewRequirements={() => setIsRequirementsModalOpen(true)}
-                  serviceKey={serviceKey}
-                />
+                <NeededFromClient onViewRequirements={() => setIsRequirementsModalOpen(true)} />
 
                 <RecentUpdates />
               </div>
@@ -142,12 +139,7 @@ export default function ClientDashboard() {
 
       <SiteFooter />
 
-      {isRequirementsModalOpen && (
-        <RequirementsModal
-          onClose={() => setIsRequirementsModalOpen(false)}
-          serviceKey={serviceKey}
-        />
-      )}
+      {isRequirementsModalOpen && <RequirementsModal onClose={() => setIsRequirementsModalOpen(false)} />}
     </div>
   );
 }

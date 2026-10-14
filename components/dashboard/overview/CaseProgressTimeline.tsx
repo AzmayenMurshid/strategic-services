@@ -75,9 +75,9 @@ export function CaseProgressTimeline({
                 {servicePrompt.label} · {servicePrompt.desiredOutcome}
               </p>
             </div>
-            <div className="rounded-[5px] border border-slate-200 bg-white/80 px-2 py-1 text-sm font-medium text-emerald-700 shadow-sm backdrop-blur-sm">
+            {/** <div className="rounded-[5px] border border-slate-200 bg-white/80 px-2 py-1 text-sm font-medium text-emerald-700 shadow-sm backdrop-blur-sm">
               {Math.max(0, activeStageIndex + 1)} of {stages.length} stages complete
-            </div>
+            </div> **/}
           </div>
 
           <div className="mb-[10px] flex items-center justify-between gap-3">
