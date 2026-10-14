@@ -1,10 +1,13 @@
-import { requiredDocs } from "../data";
+import { getRequiredDocsForService } from "../data";
 
 type NeededFromClientProps = {
   onViewRequirements: () => void;
+  serviceKey?: string | null;
 };
 
-export function NeededFromClient({ onViewRequirements }: NeededFromClientProps) {
+export function NeededFromClient({ onViewRequirements, serviceKey }: NeededFromClientProps) {
+  const requiredDocs = getRequiredDocsForService(serviceKey);
+
   return (
     <div>
       <div className="mb-5 flex items-center justify-between">

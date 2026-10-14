@@ -1,10 +1,13 @@
-import { documentRequirements } from "../data";
+import { getDocumentRequirementsForService } from "../data";
 
 type RequirementsModalProps = {
   onClose: () => void;
+  serviceKey?: string | null;
 };
 
-export function RequirementsModal({ onClose }: RequirementsModalProps) {
+export function RequirementsModal({ onClose, serviceKey }: RequirementsModalProps) {
+  const documentRequirements = getDocumentRequirementsForService(serviceKey);
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-2 sm:p-4"

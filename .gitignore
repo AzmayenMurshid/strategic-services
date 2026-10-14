@@ -25,6 +25,7 @@
 *.pem
 .md
 .txt
+/SS PROMPTS/
 
 # debug
 npm-debug.log*

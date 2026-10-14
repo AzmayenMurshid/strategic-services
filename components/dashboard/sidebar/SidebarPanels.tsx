@@ -1,6 +1,23 @@
+import { useRef, useState } from "react";
 import { fileList } from "../data";
 
 export function UploadPacket() {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [uploadedFiles, setUploadedFiles] = useState<string[]>(() => [...fileList]);
+
+  const handleFilesSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(event.target.files ?? []);
+
+    if (!selectedFiles.length) {
+      return;
+    }
+
+    const nextFiles = selectedFiles.map((file) => file.name);
+
+    setUploadedFiles((currentFiles) => [...nextFiles, ...currentFiles]);
+    event.target.value = "";
+  };
+
   return (
     <div className="rounded-[5px] p-6">
       <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
@@ -13,16 +30,30 @@ export function UploadPacket() {
         </div>
         <p className="mt-3 text-sm font-medium text-slate-700">Upload supporting documents</p>
         <p className="mt-1 text-xs text-slate-500">PDF, DOCX, JPG up to 25MB each</p>
-        <button className="mt-4 rounded-xl bg-[#152c58] px-4 py-2 text-sm font-medium text-white hover:opacity-70">
+
+        <input
+          ref={inputRef}
+          type="file"
+          multiple
+          className="hidden"
+          onChange={handleFilesSelected}
+          accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+        />
+
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          className="mt-4 rounded-xl bg-[#0d1f42] px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-900"
+        >
           Select Files
         </button>
       </div>
 
       <div className="mt-5 space-y-2">
         <p className="mt-1 text-s text-slate-500">Upload History</p>
-        {fileList.map((file) => (
+        {uploadedFiles.map((file, index) => (
           <div
-            key={file}
+            key={`${file}-${index}`}
             className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2"
           >
             <span className="truncate text-sm text-slate-700">{file}</span>

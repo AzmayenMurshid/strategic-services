@@ -19,6 +19,14 @@ export function DashboardHeader({
 }: DashboardHeaderProps) {
   const fullName = clientProfile ? `${clientProfile.firstName} ${clientProfile.lastName}`.trim() : "";
   const caseLabel = clientProfile?.id ? `Case #${clientProfile.id}` : "";
+  const initials = fullName
+    ? fullName
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0]?.toUpperCase() ?? "")
+        .join("")
+    : "C";
 
   return (
     <header className="w-full border-b border-slate-200 bg-[#152c58] px-8 py-7 shadow-sm sm:px-6 sm:py-5">
@@ -41,30 +49,55 @@ export function DashboardHeader({
                 type="button"
                 aria-label="Open client profile"
                 onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                className="flex max-w-full items-center gap-2 rounded-[5px] px-3 py-2 text-left shadow-lg transition hover:border-slate-300 hover:bg-slate-900"
+                className="flex max-w-full items-center gap-3 rounded-xl border border-white/10 bg-slate-900/30 px-3 py-2.5 text-left shadow-[0_10px_24px_rgba(15,23,42,0.22)] transition duration-200 hover:border-white/20 hover:bg-slate-900/40"
               >
-                <span className="shrink-0 text-[10px] font-medium uppercase tracking-[0.12em] text-slate-400">
-                  {isProfileMenuOpen ? "" : "Profile"}
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-semibold text-[#152c58] shadow-sm">
+                  {initials}
                 </span>
-                <span className="ml-2 truncate text-lg font-semibold text-slate-100">{fullName || "Client"}</span>
+
+                <span className="min-w-0">
+                  <span className="block text-[10px] font-medium uppercase tracking-[0.14em] text-slate-300">
+                    {isProfileMenuOpen ? "Profile" : "Profile"}
+                  </span>
+                  <span className="block truncate text-base font-semibold text-white">{fullName}</span>
+                </span>
               </button>
 
               {isProfileMenuOpen && (
-                <div className="absolute left-0 right-auto z-20 mt-2 w-[min(18rem,calc(100vw-1.5rem))] rounded-[5px] bg-white p-4 shadow-xl sm:right-0 sm:left-auto">
-                  <p className="text-xs font-medium uppercase tracking-[0.16em] text-slate-400">
-                    Client Profile
-                  </p>
+                <div className="absolute right-0 z-20 mt-3 w-[min(21rem,calc(100vw-1.5rem))] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_24px_50px_rgba(15,23,42,0.18)]">
+                  <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                      Client Profile
+                    </p>
+                  </div>
+
                   {clientProfile ? (
-                    <>
-                      <p className="mt-2 text-lg font-semibold text-slate-900">{fullName}</p>
-                      <p className="mt-1 text-sm text-slate-600">{caseLabel}</p>
-                      <div className="mt-4 space-y-2 border-t border-slate-200 pt-3">
-                        <p className="text-sm text-slate-700">Email: {clientProfile.email ?? "Not available"}</p>
-                        <p className="text-sm text-slate-700">Phone: {clientProfile.phone ?? "Not available"}</p>
+                    <div className="p-4">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#152c58] text-base font-semibold text-white">
+                          {initials}
+                        </span>
+                        <div className="min-w-0">
+                          <p className="truncate text-lg font-semibold text-slate-900">{fullName}</p>
+                          <p className="text-sm text-slate-500">{caseLabel}</p>
+                        </div>
                       </div>
-                    </>
+
+                      <div className="mt-4 p-3">
+                        <div className="space-y-2 text-sm text-slate-700">
+                          <p>
+                            <span className="font-medium text-slate-500">Email:</span>{" "}
+                            {clientProfile.email ?? "Not available"}
+                          </p>
+                          <p>
+                            <span className="font-medium text-slate-500">Phone:</span>{" "}
+                            {clientProfile.phone ?? "Not available"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   ) : (
-                    <p className="mt-2 text-sm text-slate-600">No client profile loaded.</p>
+                    <div className="p-4 text-sm text-slate-600">No client profile loaded.</div>
                   )}
                 </div>
               )}

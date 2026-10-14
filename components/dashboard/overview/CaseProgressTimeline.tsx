@@ -1,20 +1,24 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { stages } from "../data";
+import { getServicePromptByKey } from "../data";
 
 type CaseProgressTimelineProps = {
   selectedStageIndex: number | null;
   setSelectedStageIndex: (index: number | null) => void;
+  serviceKey?: string | null;
 };
 
 export function CaseProgressTimeline({
   selectedStageIndex,
   setSelectedStageIndex,
+  serviceKey,
 }: CaseProgressTimelineProps) {
   const [hoveredStageIndex, setHoveredStageIndex] = useState<number | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const stageRefs = useRef<Array<HTMLElement | null>>([]);
+  const servicePrompt = getServicePromptByKey(serviceKey);
+  const stages = servicePrompt.stages;
   const activeStageIndex = stages.findIndex((stage) => stage.status === "active");
   const activeStage = stages[activeStageIndex] ?? stages[0];
   const previewStageIndex = hoveredStageIndex ?? selectedStageIndex ?? activeStageIndex;
@@ -67,9 +71,12 @@ export function CaseProgressTimeline({
               <p className="text-md font-bold uppercase tracking-[0.2em] text-[#152c58]">
                 Case Progression
               </p>
+              <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-600">
+                {servicePrompt.label} · {servicePrompt.desiredOutcome}
+              </p>
             </div>
             <div className="rounded-[5px] border border-slate-200 bg-white/80 px-2 py-1 text-sm font-medium text-emerald-700 shadow-sm backdrop-blur-sm">
-              7 of 12 stages complete
+              {Math.max(0, activeStageIndex + 1)} of {stages.length} stages complete
             </div>
           </div>
 

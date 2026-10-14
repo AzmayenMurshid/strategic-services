@@ -4,6 +4,7 @@ type MobileNavProps = {
     id: string;
     firstName: string;
     lastName: string;
+    email: string | null;
     phone: string | null;
   } | null;
 };
@@ -13,6 +14,14 @@ export function MobileNav({ setIsMobileNavOpen, clientProfile }: MobileNavProps)
     ? `${clientProfile.firstName} ${clientProfile.lastName}`.trim()
     : "";
   const caseLabel = clientProfile?.id ? `Case #${clientProfile.id}` : "";
+  const initials = fullName
+    ? fullName
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0]?.toUpperCase() ?? "")
+        .join("")
+    : "C";
 
   return (
     <div className="fixed inset-0 z-50 lg:hidden" onClick={() => setIsMobileNavOpen(false)}>
@@ -58,15 +67,26 @@ export function MobileNav({ setIsMobileNavOpen, clientProfile }: MobileNavProps)
           ))}
         </nav>
 
-        <div className="mt-8 rounded-[5px] border border-white/15 bg-white/5 p-3">
-          <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-slate-300">
+        <div className="mt-8 rounded-2xl border border-white/15 bg-white/5 p-3.5 shadow-inner shadow-slate-900/10">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-300">
             Client Profile
           </p>
           {clientProfile ? (
             <>
-              <p className="mt-2 text-base font-semibold text-white">{fullName}</p>
-              <p className="mt-1 text-sm text-slate-200">{caseLabel}</p>
-              <p className="mt-1 text-sm text-slate-200">Phone: {clientProfile.phone ?? "Not available"}</p>
+              <div className="mt-3 flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm font-semibold text-[#152c58]">
+                  {initials}
+                </span>
+                <div>
+                  <p className="text-base font-semibold text-white">{fullName}</p>
+                  <p className="text-sm text-slate-200">{caseLabel}</p>
+                </div>
+              </div>
+
+              <div className="mt-3 border-t border-white/10 pt-3 text-sm text-slate-200">
+                <p>Email: {clientProfile.email ?? "Not available"}</p>
+                <p className="mt-1">Phone: {clientProfile.phone ?? "Not available"}</p>
+              </div>
             </>
           ) : (
             <p className="mt-2 text-sm text-slate-200">No client profile loaded.</p>
