@@ -41,6 +41,17 @@ export default function ClientLoginPage() {
 
       const contactId = result.data?.id;
       const destination = contactId ? `/dashboard?contactId=${encodeURIComponent(contactId)}` : "/dashboard";
+
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(
+          "clientPortalSession",
+          JSON.stringify({
+            contactId,
+            loggedInAt: new Date().toISOString(),
+          })
+        );
+      }
+
       router.push(destination);
     } catch {
       setErrorMessage("Unable to reach the login service. Please try again.");

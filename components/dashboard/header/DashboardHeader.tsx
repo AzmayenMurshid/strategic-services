@@ -1,3 +1,5 @@
+import { useRouter } from "next/navigation";
+
 type DashboardHeaderProps = {
   isProfileMenuOpen: boolean;
   setIsProfileMenuOpen: (value: boolean) => void;
@@ -17,6 +19,7 @@ export function DashboardHeader({
   setIsMobileNavOpen,
   clientProfile,
 }: DashboardHeaderProps) {
+  const router = useRouter();
   const fullName = clientProfile ? `${clientProfile.firstName} ${clientProfile.lastName}`.trim() : "";
   const caseLabel = clientProfile?.id ? `Case #${clientProfile.id}` : "";
   const initials = fullName
@@ -27,6 +30,17 @@ export function DashboardHeader({
         .map((part) => part[0]?.toUpperCase() ?? "")
         .join("")
     : "C";
+
+  const handleLogout = () => {
+    try {
+      window.localStorage.removeItem("clientPortalSession");
+    } catch {
+      // Ignore storage errors in restricted environments.
+    }
+
+    setIsProfileMenuOpen(false);
+    router.push("/");
+  };
 
   return (
     <header className="w-full border-b border-slate-200 bg-[#152c58] px-8 py-7 shadow-sm sm:px-6 sm:py-5">
@@ -95,9 +109,28 @@ export function DashboardHeader({
                           </p>
                         </div>
                       </div>
+
+                      <div className="mt-4 border-t border-slate-200 pt-3">
+                        <button
+                          type="button"
+                          onClick={handleLogout}
+                          className="w-full rounded-[5px] bg-[#da0101] px-3 py-2 text-sm font-semibold text-white transition hover:bg-[#b90000]"
+                        >
+                          Log out
+                        </button>
+                      </div>
                     </div>
                   ) : (
-                    <div className="p-4 text-sm text-slate-600">No client profile loaded.</div>
+                    <div className="p-4 text-sm text-slate-600">
+                      <p>No client profile loaded.</p>
+                      <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="mt-3 w-full rounded-[5px] bg-[#da0101] px-3 py-2 text-sm font-semibold text-white transition hover:bg-[#b90000]"
+                      >
+                        Log out
+                      </button>
+                    </div>
                   )}
                 </div>
               )}
@@ -108,7 +141,7 @@ export function DashboardHeader({
         <div className="flex items-center justify-between lg:hidden">
           <div className="flex min-w-0 items-center gap-4">
             <img
-              src="EIDLexit/logo.png"
+              src="/EIDLexit/logo.png"
               alt="EIDLexit logo"
               className="h-12 w-auto max-w-full object-contain"
             />
