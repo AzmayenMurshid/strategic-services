@@ -132,12 +132,12 @@ const outcomeDocumentMap: Record<
     ],
     documentRequirements: [
       { label: "Business financial overview packet", type: "Received", note: "Covers the business operating picture and supporting financial summary." },
-      { label: "P&L and balance sheet", type: "Required", note: "Primary inputs for the reorganization budget and business asset valuation." },
+      { label: "P&L sheet", type: "Required", note: "Profit and Loss sheet for one year." },
+      { label: "Balance sheet", type: "Required", note: "Most recent Balance sheet." },
       { label: "Business tax returns", type: "Required", note: "Most recent filed returns for the business entity and supporting financial review." },
       { label: "Bank statements", type: "Recommended", note: "Recent statements to confirm cash flow and account activity." },
       { label: "Owner payroll records", type: "Recommended", note: "Owner compensation and payroll verification for the business." },
-      { label: "Legal entity documents", type: "Recommended", note: "Articles, formation records, EIN verification, and ownership structure documents." },
-      { label: "Debt schedule or loan detail", type: "Recommended", note: "Helpful for reviewing SBA debt obligations and financing structure." },
+
     ],
   },
   "exit-business": {
@@ -153,8 +153,6 @@ const outcomeDocumentMap: Record<
       { label: "Client workbook / personal financial summary", type: "Received", note: "Ground truth for the means test, personal asset values, and personal debt overview." },
       { label: "Transcript or case handoff notes", type: "Required", note: "Used to close gaps, capture client context, and record key issues for the strategy session." },
       { label: "Bank statements", type: "Recommended", note: "Supports the review of personal cash flow and financial account activity." },
-      { label: "Personal ID and ownership records", type: "Recommended", note: "Useful where ownership verification or exemption support is needed." },
-      { label: "Debt schedule or creditor list", type: "Recommended", note: "Helpful for reviewing secured, unsecured, and priority debt for the exit path." },
     ],
   },
   "save-or-exit": {
@@ -169,9 +167,7 @@ const outcomeDocumentMap: Record<
       { label: "Business P&L and balance sheet", type: "Required", note: "Required to evaluate both the save path and the liquidation / asset picture." },
       { label: "Strategy Session Personal Questionnaire", type: "Required", note: "Needed for the personal exit picture, means test, and debtor profile." },
       { label: "Client workbook / both-path summary", type: "Received", note: "Ground truth for both the business and personal path analysis." },
-      { label: "Transcript or handoff notes", type: "Required", note: "Provides context, open items, and missing details to support the live strategy review." },
       { label: "Bank statements", type: "Recommended", note: "Helps validate cash flow and recent account activity for either path." },
-      { label: "Debt schedule or loan detail", type: "Recommended", note: "Helpful for comparing the reorganization and exit options side by side." },
     ],
   },
 };
