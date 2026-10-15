@@ -12,7 +12,7 @@ export default function SiteFooter() {
         </div>
         <div className={styles.contact}>
           <span>support@eidlexit.com</span>
-          <span>•</span>
+          <span>|</span>
           <span>(555) 204-4421</span>
         </div>
         <div className={styles.copyright}>© 2026 EIDLexit</div>

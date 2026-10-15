@@ -20,7 +20,7 @@ export function NeededFromClient({ onViewRequirements, serviceKey }: NeededFromC
           onClick={onViewRequirements}
           className={styles.button}
         >
-          View all requirements
+          View all
         </button>
       </div>
 

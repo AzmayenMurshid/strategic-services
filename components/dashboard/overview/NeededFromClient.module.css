@@ -19,7 +19,7 @@
 .button {
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--line);
-  border-radius: 0.75rem;
+  border-radius: 0.50rem;
   background: var(--brand);
   color: #f8fafc;
   font-size: 0.875rem;
