@@ -1,0 +1,167 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.modal {
+  width: 100%;
+  max-width: 36rem;
+  max-height: 88vh;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-xl);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.intro {
+  min-width: 0;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--text-subtle);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0.5rem 0 0;
+  color: #0f172a;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.closeButton {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-subtle);
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.closeButton:hover {
+  background: var(--surface-muted);
+  color: #0f172a;
+}
+
+.content {
+  max-height: 60vh;
+  padding: 0 1rem 1rem;
+  overflow-y: auto;
+}
+
+.row {
+  padding: 0.75rem 0;
+}
+
+.row:first-child {
+  padding-top: 0;
+}
+
+.row:last-child {
+  padding-bottom: 0;
+}
+
+.rowInner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.label {
+  margin: 0;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.note {
+  margin: 0.25rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.tag {
+  align-self: flex-start;
+  padding: 0.25rem 0.625rem;
+  color: #475569;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tagRequired {
+  color: var(--danger);
+}
+
+.tagReceived {
+  color: var(--accent);
+}
+
+.tagRecommended {
+  color: var(--warning);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  margin-top: 0.75rem;
+  background: var(--line);
+}
+
+@media (min-width: 640px) {
+  .overlay {
+    padding: 1rem;
+  }
+
+  .modal {
+    max-width: 42rem;
+  }
+
+  .header {
+    padding: 1.5rem;
+  }
+
+  .eyebrow {
+    font-size: 0.875rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .content {
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .rowInner {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}

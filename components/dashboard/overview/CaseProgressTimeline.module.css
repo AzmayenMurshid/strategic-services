@@ -1,0 +1,272 @@
+.root {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.heroCard {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem;
+  border-radius: var(--radius-card);
+  background-image: url('/EIDLexit/Businessman.png');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+}
+
+.heroBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.title {
+  margin: 0;
+  color: var(--brand);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.currentStageRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.625rem;
+}
+
+.currentLabel {
+  margin: 0;
+  color: #0f172a;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.currentName {
+  margin: 0.25rem 0 0;
+  color: #0f172a;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.scrollArea {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  text-align: left;
+  outline: none;
+  overscroll-behavior-y: contain;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollArea::-webkit-scrollbar {
+  display: none;
+}
+
+.trackViewport {
+  position: relative;
+  min-width: 680px;
+  margin-bottom: 0.75rem;
+  padding: 0 0.25rem;
+}
+
+.trackBase,
+.trackProgress {
+  position: absolute;
+  top: 50%;
+  height: 0.25rem;
+  transform: translateY(-50%);
+}
+
+.trackBase {
+  left: 0;
+  right: 0;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.trackProgress {
+  left: 0;
+  border-radius: 999px;
+  background: var(--brand);
+}
+
+.stages {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+  min-width: 680px;
+}
+
+.stageButton {
+  position: relative;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.stageCircle {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 4px solid #fff;
+  border-radius: 999px;
+  color: #475569;
+  font-size: 0.625rem;
+  font-weight: 700;
+  background: #e2e8f0;
+  box-shadow: var(--shadow-card);
+}
+
+.stageCircleComplete {
+  background: var(--accent);
+  color: #fff;
+  border: 4px solid var(--accent);
+}
+
+.stageCircleActive {
+  background: var(--brand);
+  color: #fff;
+}
+
+.stageCircleSelected {
+  box-shadow: 0 0 0 1px #93c5fd;
+}
+
+.stageTooltip {
+  pointer-events: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 20;
+  width: 11rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: #0f172a;
+  color: #f8fafc;
+  opacity: 0;
+  transform: translateX(-50%);
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.2);
+  transition: opacity 150ms ease;
+}
+
+.stageButton:hover .stageTooltip,
+.stageButton:focus-visible .stageTooltip,
+.stageButton:focus-within .stageTooltip {
+  opacity: 1;
+}
+
+.tooltipTitle {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tooltipSnippet {
+  margin: 0.25rem 0 0;
+  color: #f1f5f9;
+  font-size: 0.625rem;
+  line-height: 1.4;
+}
+
+.detailsCard {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.625rem;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(8px);
+}
+
+.stageStatus {
+  margin: 0;
+  color: var(--text-subtle);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.stageStatusComplete {
+  color: #059669;
+}
+
+.stageStatusActive {
+  color: var(--brand);
+}
+
+.detailsTitle {
+  margin: 0.25rem 0 0;
+  color: #1e293b;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.detailsCopy {
+  margin: 0.25rem 0 0;
+  color: #334155;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .trackViewport,
+  .stages {
+    min-width: 0;
+  }
+
+  .stages {
+    gap: 0;
+  }
+
+  .stageCircle {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.75rem;
+  }
+}

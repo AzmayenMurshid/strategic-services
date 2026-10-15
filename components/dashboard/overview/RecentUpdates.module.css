@@ -1,0 +1,76 @@
+.card {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: var(--surface);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--text-subtle);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.timeline {
+  margin-top: 1rem;
+}
+
+.item {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.line {
+  position: absolute;
+  top: 0;
+  left: 0.4375rem;
+  width: 1px;
+  height: 100%;
+  background: var(--line);
+}
+
+.dot {
+  position: absolute;
+  left: 0;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  background: #08244a;
+  box-shadow: var(--shadow-card);
+}
+
+.content {
+  padding-bottom: 1.25rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.text {
+  margin: 0;
+  color: #334155;
+  font-size: 0.875rem;
+}
+
+.age {
+  flex-shrink: 0;
+  color: #94a3b8;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 640px) {
+  .row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+}

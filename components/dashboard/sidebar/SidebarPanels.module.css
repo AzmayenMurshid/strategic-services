@@ -1,0 +1,140 @@
+.uploadCard {
+  padding: 1.5rem;
+  border-radius: var(--radius-card);
+  background: transparent;
+}
+
+.snapshotCard {
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  max-height: fit-content;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--text-subtle);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.dropzone {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  border: 2px dashed var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--surface-muted);
+  text-align: center;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: var(--brand);
+  font-size: 1.25rem;
+}
+
+.heading {
+  margin: 0.75rem 0 0;
+  color: #334155;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.subtext {
+  margin: 0.25rem 0 0;
+  color: var(--text-subtle);
+  font-size: 0.75rem;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.primaryButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: #0d1f42;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.primaryButton:hover {
+  background: #0f172a;
+}
+
+.history {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.historyLabel {
+  margin: 0.25rem 0 0;
+  color: var(--text-subtle);
+  font-size: 0.875rem;
+}
+
+.historyItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--surface-muted);
+}
+
+.historyName {
+  color: #334155;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.historyStatus {
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  color: #047857;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.snapshotGrid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.snapshotLabel {
+  margin: 0;
+  color: var(--text-subtle);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.snapshotValue {
+  margin: 0.25rem 0 0;
+  color: #1e293b;
+  font-weight: 500;
+}

@@ -1,4 +1,5 @@
 import { getRequiredDocsForService } from "../data";
+import styles from "./NeededFromClient.module.css";
 
 type NeededFromClientProps = {
   onViewRequirements: () => void;
@@ -9,36 +10,37 @@ export function NeededFromClient({ onViewRequirements, serviceKey }: NeededFromC
   const requiredDocs = getRequiredDocsForService(serviceKey);
 
   return (
-    <div>
-      <div className="mb-5 flex items-center justify-between">
+    <div className={styles.section}>
+      <div className={styles.header}>
         <div>
-          <p className="mt-2 text-lg font-semibold sm:text-xl">Needed from Client</p>
+          <p className={styles.title}>Needed from Client</p>
         </div>
         <button
           type="button"
           onClick={onViewRequirements}
-          className="rounded-xl border border-slate-200 bg-[#152c58] px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-900"
+          className={styles.button}
         >
           View all requirements
         </button>
       </div>
 
-      <div className="space-y-3">
+      <div className={styles.list}>
         {requiredDocs.map((doc) => (
-          <div key={doc.label} className="flex items-center justify-between gap-3">
+          <div key={doc.label} className={styles.item}>
             <div>
-              <p className="font-medium text-slate-800">{doc.label}</p>
+              <p className={styles.label}>{doc.label}</p>
             </div>
             <span
-              className={`inline-flex px-0 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${
+              className={[
+                styles.status,
                 doc.tone === "green"
-                  ? "text-emerald-600"
+                  ? styles.toneGreen
                   : doc.tone === "red"
-                    ? "text-[#da0101]"
+                    ? styles.toneRed
                     : doc.tone === "amber"
-                      ? "text-amber-600"
-                      : "text-slate-600"
-              }`}
+                      ? styles.toneAmber
+                      : styles.toneDefault,
+              ].join(" ")}
             >
               {doc.status}
             </span>

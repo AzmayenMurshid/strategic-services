@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { getServicePromptByKey } from "../data";
+import styles from "./CaseProgressTimeline.module.css";
 
 type CaseProgressTimelineProps = {
   selectedStageIndex: number | null;
@@ -25,6 +26,7 @@ export function CaseProgressTimeline({
   const selectedStage =
     stages[previewStageIndex] ?? stages[activeStageIndex] ?? stages[0];
   const progressPercent = ((activeStageIndex + 1) / stages.length) * 100;
+  const progressStyle = { width: `${progressPercent}%` } satisfies CSSProperties;
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -53,25 +55,15 @@ export function CaseProgressTimeline({
   };
 
   return (
-    <div className="space-y-6">
-      <div
-        className="relative overflow-hidden rounded-[5px] py-4 px-4"
-        style={{
-          backgroundImage: "url('/EIDLexit/Businessman.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center bottom",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="absolute inset-0 bg-white/40 backdrop-blur-[4px]" />
+    <div className={styles.root}>
+      <div className={styles.heroCard}>
+        <div className={styles.heroBackdrop} />
 
-        <div className="relative z-10">
-          <div className="mb-4 flex items-center justify-between gap-3">
+        <div className={styles.content}>
+          <div className={styles.header}>
             <div>
-              <p className="text-md font-bold uppercase tracking-[0.2em] text-[#152c58]">
-                Case Progression
-              </p>
-              <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-600">
+              <p className={styles.title}>Case Progression</p>
+              <p className={styles.subtitle}>
                 {servicePrompt.label} · {servicePrompt.desiredOutcome}
               </p>
             </div>
@@ -80,30 +72,31 @@ export function CaseProgressTimeline({
             </div> **/}
           </div>
 
-          <div className="mb-[10px] flex items-center justify-between gap-3">
+          <div className={styles.currentStageRow}>
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-900">Current stage</p>
-              <p className="mt-1 text-base font-semibold text-slate-900">{activeStage.name}</p>
+              <p className={styles.currentLabel}>Current stage</p>
+              <p className={styles.currentName}>{activeStage.name}</p>
             </div>
           </div>
 
-          <div
-            className="block w-full overflow-x-auto overflow-y-hidden text-left outline-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            ref={scrollContainerRef}
-            style={{ overscrollBehaviorY: "contain" }}
-          >
-            <div className="relative mb-3 min-w-[680px] px-1 sm:min-w-0" style={{ scrollBehavior: "auto" }}>
-              <div className="absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-[10px] bg-slate-200" />
-              <div
-                className="absolute left-0 top-1/2 h-1 -translate-y-1/2 rounded-full"
-                style={{ width: `${progressPercent}%`, backgroundColor: "#152c58" }}
-              />
+          <div className={styles.scrollArea} ref={scrollContainerRef}>
+            <div className={styles.trackViewport}>
+              <div className={styles.trackBase} />
+              <div className={styles.trackProgress} style={progressStyle} />
 
-              <div className="relative flex min-w-[680px] items-center justify-between gap-1 sm:min-w-0 sm:gap-0">
+              <div className={styles.stages}>
                 {stages.map((stage, index) => {
                   const isComplete = index < activeStageIndex;
                   const isActive = index === activeStageIndex;
                   const isSelected = (selectedStageIndex ?? activeStageIndex) === index;
+                  const stageCircleClassName = [
+                    styles.stageCircle,
+                    isComplete ? styles.stageCircleComplete : "",
+                    isActive ? styles.stageCircleActive : "",
+                    isSelected ? styles.stageCircleSelected : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ");
 
                   return (
                     <button
@@ -117,32 +110,15 @@ export function CaseProgressTimeline({
                       ref={(node) => {
                         stageRefs.current[index] = node;
                       }}
-                      className="group relative flex min-w-0 flex-1 justify-center bg-transparent p-0 text-left"
+                      className={styles.stageButton}
                     >
-                      <div
-                        className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full border-4 border-white text-[10px] font-bold shadow-sm sm:h-8 sm:w-8 sm:text-xs ${
-                          isComplete
-                            ? "text-white"
-                            : isActive
-                              ? "text-white"
-                              : "bg-slate-200 text-slate-600"
-                        } ${isSelected ? "ring-2 ring-blue-300 ring-offset-2 ring-offset-white" : ""}`}
-                        style={
-                          isComplete
-                            ? { backgroundColor: "#007b5b" }
-                            : isActive
-                              ? { backgroundColor: "#152c58" }
-                              : undefined
-                        }
-                      >
+                      <div className={stageCircleClassName}>
                         {isComplete ? "✓" : index + 1}
                       </div>
 
-                      <div className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 w-44 -translate-x-1/2 rounded-[5px] border border-slate-200 bg-slate-900 p-2 text-left opacity-0 shadow-lg transition-all duration-150 group-hover:opacity-100">
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-300">
-                          {stage.name}
-                        </p>
-                        <p className="mt-1 text-[10px] leading-4 text-slate-100">{stage.snippet}</p>
+                      <div className={styles.stageTooltip}>
+                        <p className={styles.tooltipTitle}>{stage.name}</p>
+                        <p className={styles.tooltipSnippet}>{stage.snippet}</p>
                       </div>
                     </button>
                   );
@@ -151,15 +127,18 @@ export function CaseProgressTimeline({
             </div>
           </div>
 
-          <div className="mt-3 rounded-[10px] border border-slate-200 bg-white/80 p-3 shadow-sm backdrop-blur-sm">
+          <div className={styles.detailsCard}>
             <p
-              className={`text-xs font-medium uppercase tracking-[0.12em] ${
+              className={[
+                styles.stageStatus,
                 selectedStage.status === "complete"
-                  ? "text-emerald-600"
+                  ? styles.stageStatusComplete
                   : selectedStage.status === "active"
-                    ? "text-[#152c58]"
-                    : "text-slate-500"
-              }`}
+                    ? styles.stageStatusActive
+                    : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
             >
               {selectedStage.status === "complete"
                 ? "Completed"
@@ -167,8 +146,8 @@ export function CaseProgressTimeline({
                   ? "In Progress"
                   : "Upcoming"}
             </p>
-            <p className="mt-1 text-sm font-semibold text-slate-800">{selectedStage.name}</p>
-            <p className="mt-1 text-sm text-slate-700">{selectedStage.snippet}</p>
+            <p className={styles.detailsTitle}>{selectedStage.name}</p>
+            <p className={styles.detailsCopy}>{selectedStage.snippet}</p>
           </div>
         </div>
       </div>

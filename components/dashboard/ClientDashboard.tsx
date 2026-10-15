@@ -11,6 +11,7 @@ import { RequirementsModal } from "./modals/RequirementsModal";
 import { ClientSnapshot, UploadPacket } from "./sidebar/SidebarPanels";
 import { SS_PROMPTS, normalizeServiceKey, type ServiceOutcomeKey } from "./data";
 import SiteFooter from "@/components/shared/SiteFooter";
+import styles from "./ClientDashboard.module.css";
 
 type DashboardClientProfile = {
   id: string;
@@ -72,7 +73,7 @@ export default function ClientDashboard() {
   }, [searchParams]);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-slate-100 text-slate-900">
+    <div className={styles.page}>
       <DashboardHeader
         isProfileMenuOpen={isProfileMenuOpen}
         setIsProfileMenuOpen={setIsProfileMenuOpen}
@@ -82,17 +83,17 @@ export default function ClientDashboard() {
 
       {isMobileNavOpen && <MobileNav setIsMobileNavOpen={setIsMobileNavOpen} clientProfile={clientProfile} />}
 
-      <div className="mx-auto max-w-full px-4 py-8 sm:px-6 lg:px-8">
-        <main className="grid min-w-0 gap-6 xl:grid-cols-[1.5fr_0.8fr]">
-          <section className="min-w-0 space-y-6">
-            <div className="rounded-[5px] border border-slate-200 bg-white px-4 py-3 shadow-sm">
-              <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <div className={styles.content} id="overview">
+        <main className={styles.grid}>
+          <section className={styles.mainColumn}>
+            <div className={styles.serviceSwitcher}>
+              <div className={styles.serviceSwitcherInner}>
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">Testing</p>
-                  <p className="mt-1 text-sm text-slate-700">Toggle the service prompt for the dashboard timeline.</p>
+                  <p className={styles.serviceSwitcherEyebrow}>Testing</p>
+                  <p className={styles.serviceSwitcherCopy}>Toggle the service prompt for the dashboard timeline.</p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2">
+                <div className={styles.serviceButtons}>
                   {SS_PROMPTS.map((prompt) => {
                     const isActive = serviceKey === prompt.id;
 
@@ -101,11 +102,7 @@ export default function ClientDashboard() {
                         key={prompt.id}
                         type="button"
                         onClick={() => setTestServiceKey(prompt.id)}
-                        className={`rounded-full border px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition ${
-                          isActive
-                            ? "border-[#152c58] bg-[#152c58] text-white"
-                            : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
-                        }`}
+                        className={[styles.serviceButton, isActive ? styles.serviceButtonActive : ""].filter(Boolean).join(" ")}
                       >
                         {prompt.label}
                       </button>
@@ -115,23 +112,31 @@ export default function ClientDashboard() {
               </div>
             </div>
 
-            <div className="max-w-full rounded-[5px] bg-white p-6 shadow-sm">
-              <div className="space-y-6">
-                <CaseProgressTimeline
-                  selectedStageIndex={selectedStageIndex}
-                  setSelectedStageIndex={setSelectedStageIndex}
-                  serviceKey={serviceKey}
-                />
+            <div className={styles.surfaceCard} id="case-progression">
+              <div className={styles.stack}>
+                <div className={styles.scrollTarget}>
+                  <CaseProgressTimeline
+                    selectedStageIndex={selectedStageIndex}
+                    setSelectedStageIndex={setSelectedStageIndex}
+                    serviceKey={serviceKey}
+                  />
+                </div>
 
-                <NeededFromClient onViewRequirements={() => setIsRequirementsModalOpen(true)} />
+                <div id="needed-from-client" className={styles.scrollTarget}>
+                  <NeededFromClient onViewRequirements={() => setIsRequirementsModalOpen(true)} />
+                </div>
 
-                <RecentUpdates />
+                <div id="recent-updates" className={styles.scrollTarget}>
+                  <RecentUpdates />
+                </div>
               </div>
             </div>
           </section>
 
-          <aside className="min-w-0 space-y-6">
-            <UploadPacket />
+          <aside className={styles.aside}>
+            <div id="upload-packet" className={styles.scrollTarget}>
+              <UploadPacket />
+            </div>
             <ClientSnapshot consultantName={clientProfile?.consultantName ?? null} />
           </aside>
         </main>

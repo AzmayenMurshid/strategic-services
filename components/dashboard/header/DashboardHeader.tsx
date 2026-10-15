@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation";
+import styles from "./DashboardHeader.module.css";
 
 type DashboardHeaderProps = {
   isProfileMenuOpen: boolean;
@@ -43,90 +44,85 @@ export function DashboardHeader({
   };
 
   return (
-    <header className="w-full border-b border-slate-200 bg-[#152c58] px-8 py-7 shadow-sm sm:px-6 sm:py-5">
-      <div className="mx-auto max-w-[1600px]">
-        <div className="hidden lg:flex lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex min-w-0 items-center gap-3">
+    <header className={styles.header}>
+      <div className={styles.inner}>
+        <div className={styles.desktopRow}>
+          <div className={styles.brand}>
             <img
-              src="EIDLexit/logo.png"
+              src="/EIDLexit/logo.png"
               alt="EIDLexit logo"
-              className="h-16 w-auto max-w-full object-contain"
+              className={styles.desktopLogo}
             />
-            <p className="text-base font-medium uppercase tracking-[0.2em] text-white">
-              Strategic Services
-            </p>
+            <p className={styles.brandTitle}>Strategic Services</p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="relative">
+          <div className={styles.controls}>
+            <div className={styles.profileShell}>
               <button
                 type="button"
                 aria-label="Open client profile"
                 onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                className="flex max-w-full items-center gap-3 rounded-xl border border-white/10 bg-slate-900/30 px-3 py-2.5 text-left shadow-[0_10px_24px_rgba(15,23,42,0.22)] transition duration-200 hover:border-white/20 hover:bg-slate-900/40"
+                className={styles.profileTrigger}
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-semibold text-[#152c58] shadow-sm">
+                <span className={styles.avatarLight}>
                   {initials}
                 </span>
 
-                <span className="min-w-0">
-                  <span className="block text-[10px] font-medium uppercase tracking-[0.14em] text-slate-300">
+                <span className={styles.profileMeta}>
+                  <span className={styles.profileLabel}>
                     {isProfileMenuOpen ? "Profile" : "Profile"}
                   </span>
-                  <span className="block truncate text-base font-semibold text-white">{fullName}</span>
+                  <span className={styles.profileName}>{fullName}</span>
                 </span>
               </button>
 
               {isProfileMenuOpen && (
-                <div className="absolute right-0 z-20 mt-3 w-[min(21rem,calc(100vw-1.5rem))] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_24px_50px_rgba(15,23,42,0.18)]">
-                  <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-                      Client Profile
-                    </p>
+                <div className={styles.menu}>
+                  <div className={styles.menuHeader}>
+                    <p className={styles.menuEyebrow}>Client Profile</p>
                   </div>
 
                   {clientProfile ? (
-                    <div className="p-4">
-                      <div className="flex items-center gap-3">
-                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#152c58] text-base font-semibold text-white">
+                    <div className={styles.menuBody}>
+                      <div className={styles.menuProfile}>
+                        <span className={styles.avatarBrand}>
                           {initials}
                         </span>
-                        <div className="min-w-0">
-                          <p className="truncate text-lg font-semibold text-slate-900">{fullName}</p>
-                          <p className="text-sm text-slate-500">{caseLabel}</p>
+                        <div className={styles.menuProfileMeta}>
+                          <p className={styles.menuName}>{fullName}</p>
+                          <p className={styles.menuCase}>{caseLabel}</p>
                         </div>
                       </div>
 
-                      <div className="mt-4 p-3">
-                        <div className="space-y-2 text-sm text-slate-700">
+                      <div className={styles.menuDetails}>
+                        <div className={styles.menuDetailsList}>
                           <p>
-                            <span className="font-medium text-slate-500">Email:</span>{" "}
+                            <span className={styles.detailLabel}>Email:</span>{" "}
                             {clientProfile.email ?? "Not available"}
-                          </p>
-                          <p>
-                            <span className="font-medium text-slate-500">Phone:</span>{" "}
+                            <br/>
+                            <span className={styles.detailLabel}>Phone:</span>{" "}
                             {clientProfile.phone ?? "Not available"}
                           </p>
                         </div>
                       </div>
 
-                      <div className="mt-4 border-t border-slate-200 pt-3">
+                      <div className={styles.logoutSection}>
                         <button
                           type="button"
                           onClick={handleLogout}
-                          className="w-full rounded-[5px] bg-[#da0101] px-3 py-2 text-sm font-semibold text-white transition hover:bg-[#b90000]"
+                          className={styles.logoutButton}
                         >
                           Log out
                         </button>
                       </div>
                     </div>
                   ) : (
-                    <div className="p-4 text-sm text-slate-600">
-                      <p>No client profile loaded.</p>
+                    <div className={styles.menuEmpty}>
+                      <p className={styles.menuEmptyText}>No client profile loaded.</p>
                       <button
                         type="button"
                         onClick={handleLogout}
-                        className="mt-3 w-full rounded-[5px] bg-[#da0101] px-3 py-2 text-sm font-semibold text-white transition hover:bg-[#b90000]"
+                        className={[styles.logoutButton, styles.menuEmptyButton].join(" ")}
                       >
                         Log out
                       </button>
@@ -138,23 +134,21 @@ export function DashboardHeader({
           </div>
         </div>
 
-        <div className="flex items-center justify-between lg:hidden">
-          <div className="flex min-w-0 items-center gap-4">
+        <div className={styles.mobileRow}>
+          <div className={styles.mobileBrand}>
             <img
               src="/EIDLexit/logo.png"
               alt="EIDLexit logo"
-              className="h-12 w-auto max-w-full object-contain"
+              className={styles.mobileLogo}
             />
-            <p className="text-base font-medium uppercase tracking-[0.18em] text-white">
-              Strategic Services
-            </p>
+            <p className={styles.brandTitle}>Strategic Services</p>
           </div>
 
           <button
             type="button"
             aria-label="Open mobile navigation"
             onClick={() => setIsMobileNavOpen(true)}
-            className="flex h-[3.25rem] w-[3.25rem] items-center justify-center text-2xl text-white transition hover:bg-slate-900"
+            className={styles.menuButton}
           >
             ☰
           </button>
