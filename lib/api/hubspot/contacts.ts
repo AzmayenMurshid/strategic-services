@@ -8,6 +8,7 @@ export type ClientProfile = {
   phone: string | null;
   hubspotOwnerId: string | null;
   consultantName: string | null;
+  strategicServicesStage: string | null;
 };
 
 export type ClientLoginLookup = {
@@ -121,13 +122,24 @@ export async function getClientByLogin({ firstName, lastName, recordId }: Client
   try {
     const contact = await client.crm.contacts.basicApi.getById(
       recordId,
-      ["firstname", "lastname", "email", "phone", "mobilephone", "contact_owner_id", "hubspot_owner_id", "hs_object_id"]
+      [
+        "firstname",
+        "lastname",
+        "email",
+        "phone",
+        "mobilephone",
+        "contact_owner_id",
+        "hubspot_owner_id",
+        "hs_object_id",
+        "strategic_services_stage",
+      ]
     );
 
     const properties = contact.properties ?? {};
     const remoteFirstName = (properties.firstname ?? "").trim();
     const remoteLastName = (properties.lastname ?? "").trim();
     const hubspotOwnerId = properties.contact_owner_id ?? properties.hubspot_owner_id ?? null;
+    const strategicServicesStage = properties.strategic_services_stage ?? null;
 
     if (!matchesName(firstName, remoteFirstName) || !matchesName(lastName, remoteLastName)) {
       return null;
@@ -143,6 +155,7 @@ export async function getClientByLogin({ firstName, lastName, recordId }: Client
       phone: properties.mobilephone ?? properties.phone ?? null,
       hubspotOwnerId,
       consultantName,
+      strategicServicesStage,
     } satisfies ClientProfile;
   } catch (error) {
     if (isNotFoundError(error)) {
@@ -159,11 +172,22 @@ export async function getClientByRecordId(recordId: string) {
   try {
     const contact = await client.crm.contacts.basicApi.getById(
       recordId,
-      ["firstname", "lastname", "email", "phone", "mobilephone", "contact_owner_id", "hubspot_owner_id", "hs_object_id"]
+      [
+        "firstname",
+        "lastname",
+        "email",
+        "phone",
+        "mobilephone",
+        "contact_owner_id",
+        "hubspot_owner_id",
+        "hs_object_id",
+        "strategic_services_stage",
+      ]
     );
 
     const properties = contact.properties ?? {};
     const hubspotOwnerId = properties.contact_owner_id ?? properties.hubspot_owner_id ?? null;
+    const strategicServicesStage = properties.strategic_services_stage ?? null;
     const consultantName = await resolveConsultantNameByOwnerId(hubspotOwnerId);
 
     return {
@@ -174,6 +198,7 @@ export async function getClientByRecordId(recordId: string) {
       phone: properties.mobilephone ?? properties.phone ?? null,
       hubspotOwnerId,
       consultantName,
+      strategicServicesStage,
     } satisfies ClientProfile;
   } catch (error) {
     if (isNotFoundError(error)) {

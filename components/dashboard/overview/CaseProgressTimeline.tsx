@@ -8,24 +8,70 @@ type CaseProgressTimelineProps = {
   selectedStageIndex: number | null;
   setSelectedStageIndex: (index: number | null) => void;
   serviceKey?: string | null;
+  hubSpotStageName?: string | null;
 };
+
+function normalizeStageName(value?: string | null) {
+  const normalized = (value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/\bstage\s*\d+\b/gi, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return normalized.replace(/^\s*[-:]+\s*/, "").trim();
+}
 
 export function CaseProgressTimeline({
   selectedStageIndex,
   setSelectedStageIndex,
   serviceKey,
+  hubSpotStageName,
 }: CaseProgressTimelineProps) {
   const [hoveredStageIndex, setHoveredStageIndex] = useState<number | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const stageRefs = useRef<Array<HTMLElement | null>>([]);
   const servicePrompt = getServicePromptByKey(serviceKey);
   const stages = servicePrompt.stages;
-  const activeStageIndex = stages.findIndex((stage) => stage.status === "active");
-  const activeStage = stages[activeStageIndex] ?? stages[0];
+  const normalizedHubSpotStage = normalizeStageName(hubSpotStageName);
+  const inferredStageIndex = normalizedHubSpotStage
+    ? stages.findIndex((stage) => {
+        const normalizedStageName = normalizeStageName(stage.name);
+        return (
+          normalizedStageName === normalizedHubSpotStage ||
+          normalizedStageName.includes(normalizedHubSpotStage) ||
+          normalizedHubSpotStage.includes(normalizedStageName)
+        );
+      })
+    : -1;
+
+  const hasHubSpotStage = inferredStageIndex >= 0;
+  const activeStageIndex = hasHubSpotStage ? inferredStageIndex : -1;
+  const resolvedStages = stages.map((stage, index) => ({
+    ...stage,
+    status: hasHubSpotStage
+      ? index < activeStageIndex
+        ? "complete"
+        : index === activeStageIndex
+          ? "active"
+          : "upcoming"
+      : "upcoming",
+  }));
+  const activeStage = hasHubSpotStage ? resolvedStages[activeStageIndex] ?? resolvedStages[0] : null;
   const previewStageIndex = hoveredStageIndex ?? selectedStageIndex ?? activeStageIndex;
   const selectedStage =
-    stages[previewStageIndex] ?? stages[activeStageIndex] ?? stages[0];
-  const progressPercent = ((activeStageIndex + 1) / stages.length) * 100;
+    previewStageIndex >= 0 && resolvedStages[previewStageIndex] !== undefined
+      ? resolvedStages[previewStageIndex]
+      : activeStage ?? resolvedStages[0];
+  const currentStageStatus = hasHubSpotStage
+    ? previewStageIndex < activeStageIndex
+      ? "complete"
+      : previewStageIndex === activeStageIndex
+        ? "active"
+        : "upcoming"
+    : "upcoming";
+  const progressPercent = hasHubSpotStage ? ((activeStageIndex + 1) / stages.length) * 100 : 0;
   const progressStyle = { width: `${progressPercent}%` } satisfies CSSProperties;
 
   useEffect(() => {
@@ -75,7 +121,9 @@ export function CaseProgressTimeline({
           <div className={styles.currentStageRow}>
             <div>
               <p className={styles.currentLabel}>Current stage</p>
-              <p className={styles.currentName}>{activeStage.name}</p>
+              <p className={styles.currentName}>
+                {hasHubSpotStage && activeStage ? activeStage.name : "No updates yet."}
+              </p>
             </div>
           </div>
 
@@ -85,10 +133,10 @@ export function CaseProgressTimeline({
               <div className={styles.trackProgress} style={progressStyle} />
 
               <div className={styles.stages}>
-                {stages.map((stage, index) => {
-                  const isComplete = index < activeStageIndex;
-                  const isActive = index === activeStageIndex;
-                  const isSelected = (selectedStageIndex ?? activeStageIndex) === index;
+                {resolvedStages.map((stage, index) => {
+                  const isComplete = hasHubSpotStage && index < activeStageIndex;
+                  const isActive = hasHubSpotStage && index === activeStageIndex;
+                  const isSelected = hasHubSpotStage && (selectedStageIndex ?? activeStageIndex) === index;
                   const stageCircleClassName = [
                     styles.stageCircle,
                     isComplete ? styles.stageCircleComplete : "",
@@ -113,7 +161,7 @@ export function CaseProgressTimeline({
                       className={styles.stageButton}
                     >
                       <div className={stageCircleClassName}>
-                        {isComplete ? "✓" : index + 1}
+                        {isComplete ? "✓" : hasHubSpotStage ? index + 1 : index + 1}
                       </div>
 
                       <div className={styles.stageTooltip}>
@@ -131,23 +179,23 @@ export function CaseProgressTimeline({
             <p
               className={[
                 styles.stageStatus,
-                selectedStage.status === "complete"
+                currentStageStatus === "complete"
                   ? styles.stageStatusComplete
-                  : selectedStage.status === "active"
+                  : currentStageStatus === "active"
                     ? styles.stageStatusActive
                     : "",
               ]
                 .filter(Boolean)
                 .join(" ")}
             >
-              {selectedStage.status === "complete"
+              {currentStageStatus === "complete"
                 ? "Completed"
-                : selectedStage.status === "active"
+                : currentStageStatus === "active"
                   ? "In Progress"
                   : "Upcoming"}
             </p>
-            <p className={styles.detailsTitle}>{selectedStage.name}</p>
-            <p className={styles.detailsCopy}>{selectedStage.snippet}</p>
+            <p className={styles.detailsTitle}>{selectedStage?.name ?? "No updates yet."}</p>
+            <p className={styles.detailsCopy}>{selectedStage?.snippet ?? "Consultant has not provided details yet."}</p>
           </div>
         </div>
       </div>

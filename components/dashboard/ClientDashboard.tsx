@@ -21,6 +21,7 @@ type DashboardClientProfile = {
   phone: string | null;
   hubspotOwnerId: string | null;
   consultantName: string | null;
+  strategicServicesStage: string | null;
 };
 
 export default function ClientDashboard() {
@@ -67,8 +68,19 @@ export default function ClientDashboard() {
 
     loadClientProfile();
 
+    const events = new EventSource(`/api/v1/clients/${encodeURIComponent(contactId)}/stream`);
+
+    events.addEventListener("client-stage-update", async () => {
+      await loadClientProfile();
+    });
+
+    events.onerror = () => {
+      events.close();
+    };
+
     return () => {
       isCancelled = true;
+      events.close();
     };
   }, [searchParams]);
 
@@ -119,6 +131,7 @@ export default function ClientDashboard() {
                     selectedStageIndex={selectedStageIndex}
                     setSelectedStageIndex={setSelectedStageIndex}
                     serviceKey={serviceKey}
+                    hubSpotStageName={clientProfile?.strategicServicesStage ?? null}
                   />
                 </div>
 
@@ -127,7 +140,7 @@ export default function ClientDashboard() {
                 </div>
 
                 <div id="recent-updates" className={styles.scrollTarget}>
-                  <RecentUpdates />
+                  <RecentUpdates currentStageName={clientProfile?.strategicServicesStage ?? null} />
                 </div>
               </div>
             </div>

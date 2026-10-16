@@ -110,13 +110,16 @@
   left: 0;
   right: 0;
   border-radius: 999px;
-  background: #ffffff;
+  background: rgba(148, 163, 184, 0.35);
 }
 
 .trackProgress {
   left: 0;
+  width: 0;
   border-radius: 999px;
-  background: var(--brand);
+  background: linear-gradient(90deg, #42a752 0%, #3cb142 35%, var(--brand) 100%);
+  
+  transition: width 500ms ease-in-out;
 }
 
 .stages {
@@ -159,14 +162,17 @@
 }
 
 .stageCircleComplete {
-  background: var(--accent);
+  background: linear-gradient(135deg, #16a34a, #22c55e);
   color: #fff;
-  border: 4px solid var(--accent);
+  border: 4px solid #16a34a;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+  transition: all 250ms ease;
 }
 
 .stageCircleActive {
   background: var(--brand);
   color: #fff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 .stageCircleSelected {

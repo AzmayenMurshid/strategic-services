@@ -25,18 +25,51 @@ export const SS_PROMPTS: ServicePromptDefinition[] = [
     desiredOutcome: "Reorganize under Subchapter V / Chapter 11",
     promptFile: "Strategy_Session_-_PROMPT_1_-_Save_Business_v060426-V8.md",
     stages: [
-      { name: "Intake Received", status: "complete", snippet: "Client onboarding and business intake are logged." },
-      { name: "P&L Review", status: "complete", snippet: "Operating budget and revenue picture are under review." },
-      { name: "Balance Sheet Review", status: "complete", snippet: "Asset and debt picture is being mapped for a save-path structure." },
-      { name: "Business Budget Drafted", status: "complete", snippet: "The reorganization budget is structured from the client financials." },
-      { name: "Asset Valuation Ready", status: "complete", snippet: "Current business value and asset picture are prepared for analysis." },
-      { name: "Document Review", status: "complete", snippet: "Required financial documents are being checked against the workbook." },
-      { name: "Consultant Review", status: "active", snippet: "The service team is validating the save-path build." },
-      { name: "Case Packet Drafting", status: "upcoming", snippet: "Preparing the client packet for the save-path strategy review." },
-      { name: "Client Follow-Up", status: "upcoming", snippet: "Remaining items are routed back to the client for completion." },
-      { name: "Additional Information Needed", status: "upcoming", snippet: "Any missing business or owner data is documented for review." },
-      { name: "Strategy Session Ready", status: "upcoming", snippet: "The client packet is staged for counsel review and next steps." },
-      { name: "Completed / Closed", status: "upcoming", snippet: "The save-path analysis is finalized and closed out." },
+      {
+        name: "Client Intake",
+        status: "complete",
+        snippet: "We begin by learning about you, your business, and your current situation. During this step, we gather key information about your SBA loan, business operations, financial concerns, and long-term goals. This helps us understand your unique circumstances and determine the information needed to move forward.",
+      },
+      {
+        name: "Financial Review",
+        status: "complete",
+        snippet: "Our team carefully reviews the financial documents you provide, including business and personal financial information. We analyze your current financial position, obligations, assets, and overall business performance to create a clear picture of where things stand. This review helps ensure that the attorney has accurate and organized information when evaluating your options.",
+      },
+      {
+        name: "Onboarding",
+        status: "complete",
+        snippet: "Once the initial review is complete, we meet with you to address any outstanding questions and clarify missing or incomplete information. We walk you through the workbook, explain how to complete it, and ensure all necessary financial details are properly documented. The goal of this step is to build a complete and accurate financial picture that will allow the attorney to provide informed guidance during your Strategy Session.",
+      },
+      {
+        name: "Post Onboarding",
+        status: "complete",
+        snippet: "After onboarding, we’ll review the information and documents you’ve provided and follow up with a list of any remaining items and questionnaires we may need. This helps make sure your file is complete and ready for the next steps.",
+      },
+      {
+        name: "Complete Your Workbook",
+        status: "active",
+        snippet: "SAVE: Complete your business budget projections based on realistic expected income and expenses. The goal is to show a positive Net Operating Income and that the business can generate sufficient income to cover its ongoing operating expenses and pay creditors. You’ll also complete your business asset information, including assets currently owned by the business and their estimated values.",
+      },
+      {
+        name: "Workbook Review",
+        status: "upcoming",
+        snippet: "Congratulations, your workbook is complete! We’ll review the input provided, identify anything that may need clarification or updating, and follow up with you on any remaining questions. Once everything is complete, your workbook will be ready for the next stage of the process.",
+      },
+      {
+        name: "Attorney Coordination",
+        status: "upcoming",
+        snippet: "[Description pending — to be provided by Jessica]",
+      },
+      {
+        name: "Strategy Session",
+        status: "upcoming",
+        snippet: "[Description pending — to be provided by Jessica]",
+      },
+      {
+        name: "Post Strategy Session",
+        status: "upcoming",
+        snippet: "[Description pending — to be provided by Jessica]",
+      },
     ],
   },
   {
@@ -45,18 +78,51 @@ export const SS_PROMPTS: ServicePromptDefinition[] = [
     desiredOutcome: "Personal bankruptcy strategy for closing the business",
     promptFile: "Strategy_Session_-_PROMPT_2_-_Exit_the_Business_v2_3.md",
     stages: [
-      { name: "Intake Received", status: "complete", snippet: "Client intake and personal questionnaire are logged." },
-      { name: "Required Files Verified", status: "complete", snippet: "Workbook, questionnaire, and transcript / handoff packet are confirmed." },
-      { name: "Debtor Profile Built", status: "complete", snippet: "Personal financial profile and business closure context are summarized." },
-      { name: "Means Test Review", status: "complete", snippet: "Income and Chapter 7 eligibility are analyzed against the personal picture." },
-      { name: "Asset & Debt Review", status: "complete", snippet: "Personal assets, liabilities, and exemption issues are being reviewed." },
-      { name: "Document Review", status: "complete", snippet: "Personal records and financial documents are checked for accuracy." },
-      { name: "Counsel Review", status: "active", snippet: "The exit-path overview is being reviewed for reporting and next steps." },
-      { name: "Financial Overview Draft", status: "upcoming", snippet: "The personal case overview and supporting summary are drafted." },
-      { name: "Client Follow-Up", status: "upcoming", snippet: "Any outstanding personal or business details are sent back for completion." },
-      { name: "Strategy Session Prep", status: "upcoming", snippet: "The final personal overview is prepared for the counsel strategy session." },
-      { name: "Filing Ready", status: "upcoming", snippet: "The file is prepared for the next formal step in the exit path." },
-      { name: "Completed / Closed", status: "upcoming", snippet: "The exit-path review is finalized and closed." },
+      {
+        name: "Client Intake",
+        status: "complete",
+        snippet: "We begin by learning about you, your business, and your current situation. During this step, we gather key information about your SBA loan, business operations, financial concerns, and long-term goals. This helps us understand your unique circumstances and determine the information needed to move forward.",
+      },
+      {
+        name: "Financial Review",
+        status: "complete",
+        snippet: "Our team carefully reviews the financial documents you provide, including business and personal financial information. We analyze your current financial position, obligations, assets, and overall business performance to create a clear picture of where things stand. This review helps ensure that the attorney has accurate and organized information when evaluating your options.",
+      },
+      {
+        name: "Onboarding",
+        status: "complete",
+        snippet: "Once the initial review is complete, we meet with you to address any outstanding questions and clarify missing or incomplete information. We walk you through the workbook, explain how to complete it, and ensure all necessary financial details are properly documented. The goal of this step is to build a complete and accurate financial picture that will allow the attorney to provide informed guidance during your Strategy Session.",
+      },
+      {
+        name: "Post Onboarding",
+        status: "complete",
+        snippet: "After onboarding, we’ll review the information and documents you’ve provided and follow up with a list of any remaining items and questionnaires we may need. This helps make sure your file is complete and ready for the next steps.",
+      },
+      {
+        name: "Complete Your Workbook",
+        status: "active",
+        snippet: "EXIT: Complete your business asset information so we have an updated picture of what the business currently owns. You’ll also review and complete your personal budget and personal asset information, including your household income and expenses and the assets you personally own, to make sure the information is complete and up to date.",
+      },
+      {
+        name: "Workbook Review",
+        status: "upcoming",
+        snippet: "Congratulations, your workbook is complete! We’ll review the input provided, identify anything that may need clarification or updating, and follow up with you on any remaining questions. Once everything is complete, your workbook will be ready for the next stage of the process.",
+      },
+      {
+        name: "Attorney Coordination",
+        status: "upcoming",
+        snippet: "[Description pending — to be provided by Jessica]",
+      },
+      {
+        name: "Strategy Session",
+        status: "upcoming",
+        snippet: "[Description pending — to be provided by Jessica]",
+      },
+      {
+        name: "Post Strategy Session",
+        status: "upcoming",
+        snippet: "[Description pending — to be provided by Jessica]",
+      },
     ],
   },
   {
@@ -65,18 +131,51 @@ export const SS_PROMPTS: ServicePromptDefinition[] = [
     desiredOutcome: "Undecided path comparing both save and exit options",
     promptFile: "Strategy_Session_-_PROMPT_1_ - Save or Exit (Undecided) (1).md",
     stages: [
-      { name: "Intake Received", status: "complete", snippet: "Both-path onboarding and case intake are logged." },
-      { name: "Business & Personal Inputs", status: "complete", snippet: "Save-path and personal exit inputs are assembled for comparison." },
-      { name: "Workbook Build", status: "complete", snippet: "The undecided workbook is prepared with both business and personal views." },
-      { name: "Business Budget Review", status: "complete", snippet: "The save-path business picture is reviewed against the budget documents." },
-      { name: "Exit-Path Snapshot", status: "complete", snippet: "Personal asset and means-test picture is summarized for the exit option." },
-      { name: "Decision Framework", status: "complete", snippet: "Both paths are organized for counsel review and discussion." },
-      { name: "Consultant Review", status: "active", snippet: "The strategy team is validating both paths against the data set." },
-      { name: "Counsel Briefing", status: "upcoming", snippet: "The both-path summary is prepared for the live strategy session." },
-      { name: "Client Follow-Up", status: "upcoming", snippet: "Outstanding items are gathered so counsel can decide with the client." },
-      { name: "Strategy Session Ready", status: "upcoming", snippet: "The client is prepared for the path-selection strategy session." },
-      { name: "Decision Point", status: "upcoming", snippet: "The legal team and client evaluate the selected route for next steps." },
-      { name: "Completed / Closed", status: "upcoming", snippet: "The undecided analysis is closed and handoff is complete." },
+      {
+        name: "Client Intake",
+        status: "complete",
+        snippet: "We begin by learning about you, your business, and your current situation. During this step, we gather key information about your SBA loan, business operations, financial concerns, and long-term goals. This helps us understand your unique circumstances and determine the information needed to move forward.",
+      },
+      {
+        name: "Financial Review",
+        status: "complete",
+        snippet: "Our team carefully reviews the financial documents you provide, including business and personal financial information. We analyze your current financial position, obligations, assets, and overall business performance to create a clear picture of where things stand. This review helps ensure that the attorney has accurate and organized information when evaluating your options.",
+      },
+      {
+        name: "Onboarding",
+        status: "complete",
+        snippet: "Once the initial review is complete, we meet with you to address any outstanding questions and clarify missing or incomplete information. We walk you through the workbook, explain how to complete it, and ensure all necessary financial details are properly documented. The goal of this step is to build a complete and accurate financial picture that will allow the attorney to provide informed guidance during your Strategy Session.",
+      },
+      {
+        name: "Post Onboarding",
+        status: "complete",
+        snippet: "After onboarding, we’ll review the information and documents you’ve provided and follow up with a list of any remaining items and questionnaires we may need. This helps make sure your file is complete and ready for the next steps.",
+      },
+      {
+        name: "Complete Your Workbook",
+        status: "active",
+        snippet: "SAVE & EXIT: Complete the applicable information from both paths. This includes your business budget projections and business assets, along with the relevant personal budget and personal asset information, so your workbook reflects both your business and personal financial situation.",
+      },
+      {
+        name: "Workbook Review",
+        status: "upcoming",
+        snippet: "Congratulations, your workbook is complete! We’ll review the input provided, identify anything that may need clarification or updating, and follow up with you on any remaining questions. Once everything is complete, your workbook will be ready for the next stage of the process.",
+      },
+      {
+        name: "Attorney Coordination",
+        status: "upcoming",
+        snippet: "[Description pending — to be provided by Jessica]",
+      },
+      {
+        name: "Strategy Session",
+        status: "upcoming",
+        snippet: "[Description pending — to be provided by Jessica]",
+      },
+      {
+        name: "Post Strategy Session",
+        status: "upcoming",
+        snippet: "[Description pending — to be provided by Jessica]",
+      },
     ],
   },
 ];
@@ -124,58 +223,60 @@ const outcomeDocumentMap: Record<
 > = {
   "save-business": {
     requiredDocs: [
-      { label: "Business financial overview packet", status: "Received", tone: "green" },
-      { label: "P&L and balance sheet", status: "Required", tone: "red" },
-      { label: "Business tax returns", status: "Required", tone: "red" },
-      { label: "Bank statements", status: "Recommended", tone: "amber" },
-      { label: "Owner payroll records", status: "Recommended", tone: "amber" },
+      { label: "Profit and Loss statement covering one full year", status: "Required", tone: "red" },
+      { label: "Latest one-year Balance Sheet", status: "Required", tone: "red" },
+      { label: "Loan Authorization and Agreement", status: "Required", tone: "red" },
+      { label: "Workbook", status: "Required", tone: "red" },
+      { label: "Business Tax Return", status: "Recommended", tone: "amber" },
+      { label: "3–6 months Business Bank Statement", status: "Recommended", tone: "amber" },
     ],
     documentRequirements: [
-      { label: "Business financial overview packet", type: "Received", note: "Covers the business operating picture and supporting financial summary." },
-      { label: "P&L sheet", type: "Required", note: "Profit and Loss sheet for one year." },
-      { label: "Balance sheet", type: "Required", note: "Most recent Balance sheet." },
-      { label: "Business tax returns", type: "Required", note: "Most recent filed returns for the business entity and supporting financial review." },
-      { label: "Business bank statements", type: "Recommended", note: "Recent statements to confirm business cash flow and account activity." },
-      { label: "Personal bank statements", type: "Recommended", note: "Recent statements to confirm personal cash flow and account activity." },
-      { label: "Owner payroll records", type: "Recommended", note: "Owner compensation and payroll verification for the business." },
-
+      { label: "Profit and Loss statement covering one full year", type: "Required", note: "Provide either September 2025 to October 2026, or the full Profit and Loss for 2025." },
+      { label: "Latest one-year Balance Sheet", type: "Required", note: "Most recent one-year balance sheet for the business." },
+      { label: "Loan Authorization and Agreement", type: "Required", note: "Executed loan documents required for the SBA review and strategy path." },
+      { label: "Workbook", type: "Required", note: "Complete the workbook during Stage 5, which is the final document needed from the client." },
+      { label: "Business Tax Return", type: "Recommended", note: "Recommended and can be submitted during or after onboarding." },
+      { label: "3–6 months Business Bank Statement", type: "Recommended", note: "Recommended and can be submitted during or after onboarding." },
     ],
   },
   "exit-business": {
     requiredDocs: [
-      { label: "Strategy Session Personal Questionnaire", status: "Required", tone: "red" },
-      { label: "Client workbook / personal financial summary", status: "Received", tone: "green" },
-      { label: "Transcript or case handoff notes", status: "Required", tone: "red" },
-      { label: "Bank statements", status: "Recommended", tone: "amber" },
-      { label: "Personal ID and ownership records", status: "Recommended", tone: "amber" },
+      { label: "Fill out Personal Questionnaire", status: "Required", tone: "red" },
+      { label: "Balance Sheet", status: "Required", tone: "red" },
+      { label: "Loan Authorization and Agreement", status: "Required", tone: "red" },
+      { label: "Workbook", status: "Required", tone: "red" },
+      { label: "Business & Personal Tax Return", status: "Recommended", tone: "amber" },
+      { label: "3–6 months Business Bank Statement", status: "Recommended", tone: "amber" },
+      { label: "3–6 months Personal Bank Statement", status: "Recommended", tone: "amber" },
     ],
     documentRequirements: [
-      { label: "Strategy Session Personal Questionnaire", type: "Required", note: "Primary source for debtor details, personal assets, income, and filing-related facts." },
-      { label: "Business tax returns", type: "Required", note: "Most recent filed returns for the business entity and supporting financial review." },
-      { label: "Personal tax returns", type: "Required", note: "Most recent filed returns for the individual and supporting financial review." },
-      { label: "Client workbook / personal financial summary", type: "Received", note: "Ground truth for the means test, personal asset values, and personal debt overview." },
-      { label: "Transcript or case handoff notes", type: "Required", note: "Used to close gaps, capture client context, and record key issues for the strategy session." },
-      { label: "Business bank statements", type: "Recommended", note: "Supports the review of business cash flow and financial account activity." },
-      { label: "Personal bank statements", type: "Recommended", note: "Supports the review of personal cash flow and financial account activity." },
+      { label: "Fill out Personal Questionnaire", type: "Required", note: "Complete the personal questionnaire required for the exit strategy review." },
+      { label: "Balance Sheet", type: "Required", note: "Latest balance sheet required for the personal and business financial picture." },
+      { label: "Loan Authorization and Agreement", type: "Required", note: "Executed agreements required to support the review and filing strategy." },
+      { label: "Workbook", type: "Required", note: "Complete the workbook during Stage 5, which is the final document needed from the client." },
+      { label: "Business & Personal Tax Return", type: "Recommended", note: "Recommended and can be submitted during or after onboarding." },
+      { label: "3–6 months Business Bank Statement", type: "Recommended", note: "Recommended and can be submitted during or after onboarding." },
+      { label: "3–6 months Personal Bank Statement", type: "Recommended", note: "Recommended and can be submitted during or after onboarding." },
     ],
   },
   "save-or-exit": {
     requiredDocs: [
-      { label: "Business P&L and balance sheet", status: "Required", tone: "red" },
-      { label: "Strategy Session Personal Questionnaire", status: "Required", tone: "red" },
-      { label: "Client workbook / both-path summary", status: "Received", tone: "green" },
-      { label: "Transcript or handoff notes", status: "Required", tone: "red" },
-      { label: "Bank statements", status: "Recommended", tone: "amber" },
+      { label: "Profit and Loss statement covering one full year", status: "Required", tone: "red" },
+      { label: "Latest one-year Balance Sheet", status: "Required", tone: "red" },
+      { label: "Loan Authorization and Agreement", status: "Required", tone: "red" },
+      { label: "Workbook", status: "Required", tone: "red" },
+      { label: "Business & Personal Tax Return", status: "Recommended", tone: "amber" },
+      { label: "3–6 months Business Bank Statement", status: "Recommended", tone: "amber" },
+      { label: "3–6 months Personal Bank Statement", status: "Recommended", tone: "amber" },
     ],
     documentRequirements: [
-      { label: "Business P&L and balance sheet", type: "Required", note: "Required to evaluate both the save path and the liquidation / asset picture." },
-      { label: "Strategy Session Personal Questionnaire", type: "Required", note: "Needed for the personal exit picture, means test, and debtor profile." },
-      { label: "Client workbook / both-path summary", type: "Received", note: "Ground truth for both the business and personal path analysis." },
-      { label: "Business tax returns", type: "Required", note: "Most recent filed returns for the business entity and supporting financial review." },
-      { label: "Personal tax returns", type: "Required", note: "Most recent filed returns for the individual and supporting financial review." },
-      { label: "Business bank statements", type: "Recommended", note: "Helps validate business cash flow and recent account activity for either path." },
-      { label: "Personal bank statements", type: "Recommended", note: "Helps validate personal cash flow and recent account activity for either path." },
-      
+      { label: "Profit and Loss statement covering one full year", type: "Required", note: "Provide either September 2025 to October 2026, or the full Profit and Loss for 2025." },
+      { label: "Latest one-year Balance Sheet", type: "Required", note: "Most recent one-year balance sheet for the business." },
+      { label: "Loan Authorization and Agreement", type: "Required", note: "Executed loan documents required for the SBA review and strategy path." },
+      { label: "Workbook", type: "Required", note: "Complete the workbook during Stage 5, which is the final document needed from the client." },
+      { label: "Business & Personal Tax Return", type: "Recommended", note: "Recommended and can be submitted during or after onboarding." },
+      { label: "3–6 months Business Bank Statement", type: "Recommended", note: "Recommended and can be submitted during or after onboarding." },
+      { label: "3–6 months Personal Bank Statement", type: "Recommended", note: "Recommended and can be submitted during or after onboarding." },
     ],
   },
 };
@@ -193,11 +294,84 @@ export function getDocumentRequirementsForService(serviceKey?: string | null) {
 export const requiredDocs = getRequiredDocsForService("save-business");
 export const documentRequirements = getDocumentRequirementsForService("save-business");
 
-export const recentUpdates = [
-  { text: "Consultant requested additional payroll verification.", age: "2 hours ago" },
-  { text: "Financial overview has been reviewed and accepted.", age: "1 day ago" },
-  { text: "Client upload was received and forwarded for consultant review.", age: "3 days ago" },
-] as const;
+export function getRecentUpdatesForStage(currentStageName?: string | null) {
+  const stageName = (currentStageName ?? "").trim();
+
+  if (!stageName) {
+    return [
+      { text: "Your case is waiting for the next stage update.", age: "Just now" },
+    ] as const;
+  }
+
+  const stageLabel = stageName.toLowerCase();
+
+  if (stageLabel.includes("client intake")) {
+    return [
+      { text: "Client Intake Completed", age: "Just now" },
+      { text: "Your file is now on Financial Review", age: "Next step" },
+    ] as const;
+  }
+
+  if (stageLabel.includes("financial review")) {
+    return [
+      { text: "Financial Overview Completed", age: "Just now" },
+      { text: "Your file is now on Onboarding", age: "Next step" },
+    ] as const;
+  }
+
+  if (stageLabel.includes("onboarding")) {
+    return [
+      { text: "Onboarding Completed", age: "Just now" },
+      { text: "Your file is now on Post Onboarding", age: "Next step" },
+    ] as const;
+  }
+
+  if (stageLabel.includes("post onboarding")) {
+    return [
+      { text: "Post Onboarding Completed", age: "Just now" },
+      { text: "Your file is now on Complete Your Workbook", age: "Next step" },
+    ] as const;
+  }
+
+  if (stageLabel.includes("complete your workbook")) {
+    return [
+      { text: "Workbook Submitted", age: "Just now" },
+      { text: "Your file is now on Workbook Review", age: "Next step" },
+    ] as const;
+  }
+
+  if (stageLabel.includes("workbook review")) {
+    return [
+      { text: "Workbook Review Completed", age: "Just now" },
+      { text: "Your file is now on Attorney Coordination", age: "Next step" },
+    ] as const;
+  }
+
+  if (stageLabel.includes("attorney coordination")) {
+    return [
+      { text: "Attorney Coordination Completed", age: "Just now" },
+      { text: "Your file is now on Strategy Session", age: "Next step" },
+    ] as const;
+  }
+
+  if (stageLabel.includes("strategy session")) {
+    return [
+      { text: "Strategy Session Completed", age: "Just now" },
+      { text: "Your file is now on Post Strategy Session", age: "Next step" },
+    ] as const;
+  }
+
+  if (stageLabel.includes("post strategy")) {
+    return [
+      { text: "Post Strategy Session Completed", age: "Just now" },
+      { text: "Your case is now complete", age: "Final step" },
+    ] as const;
+  }
+
+  return [
+    { text: `${stageName} is in progress.`, age: "Now" },
+  ] as const;
+}
 
 export const fileList = [
   "financial_overview.pdf",
